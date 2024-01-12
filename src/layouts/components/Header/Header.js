@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import {
     Navbar,
     MobileNav,
@@ -13,6 +15,7 @@ import {
     IconButton,
     Input,
     Image,
+    Collapse
 } from '@material-tailwind/react';
 import {
     CubeTransparentIcon,
@@ -30,7 +33,6 @@ import {
 import { GoVideo } from 'react-icons/go';
 import { IoBookmarkOutline } from 'react-icons/io5';
 import { HiBellAlert } from 'react-icons/hi2';
-import { Link } from 'react-router-dom';
 
 import LoginForm from '../../../components/LoginForm';
 import NotifyMenu from '../../../components/NotifyMenu';
@@ -89,9 +91,9 @@ function ProfileMenu() {
                             <path
                                 d="M13 13.5L9 9.5M10.3333 6.16667C10.3333 6.7795 10.2126 7.38634 9.97811 7.95252C9.74358 8.51871 9.39984 9.03316 8.9665 9.4665C8.53316 9.89984 8.01871 10.2436 7.45252 10.4781C6.88634 10.7126 6.2795 10.8333 5.66667 10.8333C5.05383 10.8333 4.447 10.7126 3.88081 10.4781C3.31462 10.2436 2.80018 9.89984 2.36683 9.4665C1.93349 9.03316 1.58975 8.51871 1.35523 7.95252C1.12071 7.38634 1 6.7795 1 6.16667C1 4.92899 1.49167 3.742 2.36683 2.86683C3.242 1.99167 4.42899 1.5 5.66667 1.5C6.90434 1.5 8.09133 1.99167 8.9665 2.86683C9.84167 3.742 10.3333 4.92899 10.3333 6.16667Z"
                                 stroke="#CFD8DC"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
                             />
                         </svg>
                     </div>
@@ -125,7 +127,7 @@ function ProfileMenu() {
                 </Button>
             </MenuHandler>
 
-            <MenuList className="p-1">
+            <MenuList className="p-1 z-alert">
                 {profileMenuItems.map(({ label, icon }, key) => {
                     const isLastItem = key === profileMenuItems.length - 1;
                     return (
@@ -175,8 +177,8 @@ const navListMenuItems = [
 function NavListMenu() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const renderItems = navListMenuItems.map(({ title, description }) => (
-        <a href="#" key={title}>
+    const renderItems = navListMenuItems.map(({ title, description }, index) => (
+        <Link to={config.routes.home} key={index}>
             <MenuItem>
                 <Typography variant="h6" color="blue-gray" className="mb-1">
                     {title}
@@ -185,7 +187,7 @@ function NavListMenu() {
                     {description}
                 </Typography>
             </MenuItem>
-        </a>
+        </Link>
     ));
 
     return (
@@ -243,14 +245,9 @@ function NavList() {
     return (
         <ul className="mt-2 mb-4 flex flex-col gap-2 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center">
             <NavListMenu />
-            {navListItems.map(({ label, icon, path }, key) => (
-                <Link to={path}>
-                    <Typography
-                        key={label}
-                        variant="small"
-                        color="gray"
-                        className="font-medium text-blue-gray-500"
-                    >
+            {navListItems.map(({ label, icon, path }, index) => (
+                <Link to={path} key={index}>
+                    <Typography key={label} variant="small" color="gray" className="font-medium text-blue-gray-500">
                         <MenuItem className="flex items-center gap-2 lg:rounded-full">
                             {React.createElement(icon, { className: 'h-[18px] w-[18px]' })}{' '}
                             <span className="text-gray-900"> {label}</span>
@@ -272,8 +269,12 @@ function Header() {
     }, []);
 
     return (
-        <Navbar fullWidth className="fixed top-0 w-full p-2 sm:mx-auto md:mx-0  lg:pl-6 ">
-            <div className="relative mx-auto my-auto flex items-center justify-between text-blue-gray-900 ">
+        // fixed top-0 w-full p-2 sm:mx-auto md:mx-0  lg:pl-6
+        <Navbar
+            fullWidth
+            className="block px-8 backdrop-saturate-200 backdrop-blur-2xl bg-opacity-80 border border-white/80 text-white w-full max-w-full rounded-none border-b-[1.5px] !border-blue-gray-50 bg-white py-1.5 !pl-2 !pr-3 lg:!px-4 lg:!py-2"
+        >
+            <div className=" mx-auto my-auto flex items-center justify-between text-blue-gray-900 ">
                 <Link to={config.routes.home}>
                     <Typography
                         as="a"
@@ -352,7 +353,7 @@ function Header() {
 
                 <ProfileMenu />
             </div>
-            <MobileNav open={isNavOpen} className="overflow-scroll">
+            <Collapse open={isNavOpen} className="overflow-scrol">
                 <NavList />
                 <div className="flex flex-col gap-x-2 sm:flex-row sm:items-center">
                     <div className="relative w-full gap-2 md:w-max">
@@ -382,9 +383,9 @@ function Header() {
                                 <path
                                     d="M13 13.5L9 9.5M10.3333 6.16667C10.3333 6.7795 10.2126 7.38634 9.97811 7.95252C9.74358 8.51871 9.39984 9.03316 8.9665 9.4665C8.53316 9.89984 8.01871 10.2436 7.45252 10.4781C6.88634 10.7126 6.2795 10.8333 5.66667 10.8333C5.05383 10.8333 4.447 10.7126 3.88081 10.4781C3.31462 10.2436 2.80018 9.89984 2.36683 9.4665C1.93349 9.03316 1.58975 8.51871 1.35523 7.95252C1.12071 7.38634 1 6.7795 1 6.16667C1 4.92899 1.49167 3.742 2.36683 2.86683C3.242 1.99167 4.42899 1.5 5.66667 1.5C6.90434 1.5 8.09133 1.99167 8.9665 2.86683C9.84167 3.742 10.3333 4.92899 10.3333 6.16667Z"
                                     stroke="#CFD8DC"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
                                 />
                             </svg>
                         </div>
@@ -393,7 +394,7 @@ function Header() {
                         Search
                     </Button>
                 </div>
-            </MobileNav>
+            </Collapse>
         </Navbar>
     );
 }

@@ -7,8 +7,7 @@ import {
     Avatar,
     Typography,
   } from "@material-tailwind/react";
-   
-  import { HiBellAlert } from "react-icons/hi2";
+  
   function ClockIcon() {
     return (
       <svg
@@ -48,7 +47,7 @@ import {
             {NotifyIcon}
           </IconButton>
         </MenuHandler>
-        <MenuList className="flex flex-col gap-2">
+        <MenuList className="flex flex-col gap-2 z-alert">
           <MenuItem className="flex items-center gap-4 py-2 pl-2 pr-8">
             <Avatar
               variant="circular"
