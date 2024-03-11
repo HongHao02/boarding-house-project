@@ -1,6 +1,4 @@
-import { Typography } from '@material-tailwind/react';
 
-import images from '../../assets/images';
 function Post() {
     return (
         <div className="flex justify-center align-center">

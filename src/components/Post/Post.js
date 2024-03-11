@@ -1,14 +1,10 @@
-import { IoIosMore } from 'react-icons/io';
 import { FaHeart } from 'react-icons/fa';
 import { FaComment } from 'react-icons/fa';
 import { MdOutlineMoreHoriz } from 'react-icons/md';
 import { FaHouse } from 'react-icons/fa6';
-import { FaMapMarkedAlt } from 'react-icons/fa';
-import { ImShare2 } from 'react-icons/im';
-import { FaMapMarkerAlt } from 'react-icons/fa';
 import { IoMapOutline } from 'react-icons/io5';
-import { forwardRef, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { forwardRef, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { IoHeartCircleSharp } from 'react-icons/io5';
 import { IoHeartDislike } from 'react-icons/io5';
 
@@ -18,17 +14,17 @@ import DialogDefault from '../Dialog/DialogDefault';
 import AlertCustom from '../Alert/AlertCustom';
 
 function Post({ post, likedPosts, ...passProps }, ref) {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const users = useSelector((state) => state.users);
-    const [likedPostList, setLikedPostList] = useState([...likedPosts]);
+    // const [likedPostList, setLikedPostList] = useState([...likedPosts]);
     const [expand, setExpand] = useState(false);
     const [like, setLike] = useState(post.countLikes);
     const [showDiaglog, setShowDiaglog] = useState(false);
     const [showLoginDialog, setshowLoginDialog] = useState(false);
     //likedPost
     const [liked, setLiked] = useState(() => {
-        if (likedPostList.length !== 0) {
-            for (const p of likedPostList) {
+        if (likedPosts.length !== 0) {
+            for (const p of likedPosts) {
                 if (post.idBaiViet === p.idBaiViet) {
                     return true;
                 }
@@ -37,23 +33,18 @@ function Post({ post, likedPosts, ...passProps }, ref) {
         return false;
     });
 
-
     useEffect(() => {
         if (likedPosts.length > 0) {
             // Kiểm tra xem post có trong danh sách likedPosts hay không
-            const isLiked = likedPosts.some(likedPost => likedPost.idBaiViet === post.idBaiViet);
+            const isLiked = likedPosts.some((likedPost) => likedPost.idBaiViet === post.idBaiViet);
             setLiked(isLiked);
         }
     }, [likedPosts, post]);
 
-    
     //Blur image
     const [load, setLoad] = useState(false);
     ////Alert
     const [alert, setAlert] = useState(null);
-    const showAlert = (type, message) => {
-        setAlert({ type, message });
-    };
     const handleCloseAlert = () => {
         setAlert(null);
     };
@@ -63,12 +54,12 @@ function Post({ post, likedPosts, ...passProps }, ref) {
     };
     const fallback =
         'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80';
-    const blurImage =
-        'https://images.search.yahoo.com/images/view;_ylt=AwrOtgdJS.tl1CUUpHaJzbkF;_ylu=c2VjA3NyBHNsawNpbWcEb2lkAzM1OThlOTZlOGQ0Zjc3ODI0MjNlMTg0NGUyN2JmYmFkBGdwb3MDNDkEaXQDYmluZw--?back=https%3A%2F%2Fimages.search.yahoo.com%2Fsearch%2Fimages%3Fp%3Dblur%2Bimage%26type%3DE210US885G91814%26fr%3Dmcafee%26fr2%3Dpiv-web%26tab%3Dorganic%26ri%3D49&w=4500&h=3000&imgurl=www.bdsc.school.nz%2Fwp-content%2Fuploads%2F2017%2F03%2Fbackground-blur-1.jpg&rurl=http%3A%2F%2Fwww.bdsc.school.nz%2Fbackground-blur-1-2%2F&size=1328.3KB&p=blur+image&oid=3598e96e8d4f7782423e1844e27bfbad&fr2=piv-web&fr=mcafee&tt=background+blur+%281%29+%E2%80%A2+BDSC&b=0&ni=21&no=49&ts=&tab=organic&sigr=tP2kPuiaKvEz&sigb=Z95aSQHVDM7N&sigi=0D4QBMq2YRLG&sigt=WmQzVwh9D_G1&.crumb=WB8aweCmcY4&fr=mcafee&fr2=piv-web&type=E210US885G91814';
+    // const blurImage =
+    //     'https://images.search.yahoo.com/images/view;_ylt=AwrOtgdJS.tl1CUUpHaJzbkF;_ylu=c2VjA3NyBHNsawNpbWcEb2lkAzM1OThlOTZlOGQ0Zjc3ODI0MjNlMTg0NGUyN2JmYmFkBGdwb3MDNDkEaXQDYmluZw--?back=https%3A%2F%2Fimages.search.yahoo.com%2Fsearch%2Fimages%3Fp%3Dblur%2Bimage%26type%3DE210US885G91814%26fr%3Dmcafee%26fr2%3Dpiv-web%26tab%3Dorganic%26ri%3D49&w=4500&h=3000&imgurl=www.bdsc.school.nz%2Fwp-content%2Fuploads%2F2017%2F03%2Fbackground-blur-1.jpg&rurl=http%3A%2F%2Fwww.bdsc.school.nz%2Fbackground-blur-1-2%2F&size=1328.3KB&p=blur+image&oid=3598e96e8d4f7782423e1844e27bfbad&fr2=piv-web&fr=mcafee&tt=background+blur+%281%29+%E2%80%A2+BDSC&b=0&ni=21&no=49&ts=&tab=organic&sigr=tP2kPuiaKvEz&sigb=Z95aSQHVDM7N&sigi=0D4QBMq2YRLG&sigt=WmQzVwh9D_G1&.crumb=WB8aweCmcY4&fr=mcafee&fr2=piv-web&type=E210US885G91814';
     const maxVisibleImage = 3;
     const visibleImages = post.fileSet.slice(0, maxVisibleImage); // Lấy danh sách ảnh hiển thị được
-    const hiddenImages = post.fileSet.slice(maxVisibleImage); // Lấy danh sách ảnh ẩn
-    const postRef = useRef();
+    // const hiddenImages = post.fileSet.slice(maxVisibleImage); // Lấy danh sách ảnh ẩn
+    // const postRef = useRef();
 
     function getHeight(numImages) {
         if (numImages === 1 || numImages === 2) {

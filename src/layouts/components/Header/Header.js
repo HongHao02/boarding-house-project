@@ -1,7 +1,6 @@
 import React from 'react';
 import {
     Navbar,
-    MobileNav,
     Typography,
     Button,
     Menu,
@@ -12,7 +11,6 @@ import {
     Card,
     IconButton,
     Input,
-    Image,
     Collapse,
 } from '@material-tailwind/react';
 import {
@@ -28,11 +26,10 @@ import {
     RocketLaunchIcon,
     Bars2Icon,
 } from '@heroicons/react/24/solid';
-import { GoVideo } from 'react-icons/go';
 import { IoBookmarkOutline } from 'react-icons/io5';
 import { HiBellAlert } from 'react-icons/hi2';
 import { Link } from 'react-router-dom';
-import { UseSelector, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import LoginForm from '../../../components/LoginForm';
@@ -69,7 +66,7 @@ function ProfileMenu() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     const closeMenu = () => setIsMenuOpen(false);
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const users = useSelector((state) => state.users);
 
     return (
@@ -296,7 +293,7 @@ function Header() {
                         // as="a"
                         color="purple"
                         // href="#"
-                        className="mr-4 ml-2 cursor-pointer py-1.5 font-medium font-bold"
+                        className="mr-4 ml-2 cursor-pointer py-1.5 font-bold"
                     >
                         {/* <img className="relative max-w-16 mx-auto flex items-center justify-between text-blue-gray-900" src={images.logo} alt="logo"/> */}
                         BOARDING HOUSE

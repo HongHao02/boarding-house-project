@@ -1,17 +1,16 @@
 import React from 'react';
 import { Button, Dialog, DialogHeader, DialogBody, DialogFooter } from '@material-tailwind/react';
 
-
 import LoginForm from '~/components/LoginForm';
 
 function DialogDefault({ children, type, isOpen = true, onClose }) {
-    const [open, setOpen] = React.useState(isOpen);
-    const handleOpen = () => setOpen(!open);
+    // const [open, setOpen] = React.useState(isOpen);
+    // const handleOpen = () => setOpen(!open);
 
     const handleClose = () => {
         onClose();
     };
-    console.log('dialog open ', open);
+    // console.log('dialog open ', open);
     return (
         <>
             <Dialog open handler={handleClose}>

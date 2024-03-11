@@ -1,9 +1,7 @@
-import { useState } from 'react';
-import { Drawer } from '@material-tailwind/react';
+
 
 import { Sidebar, SidebarWithBurgerMenu } from '../components';
-import Home from '../../pages/Home';
-import RightSidebar from '~/layouts/components/RightSidebar';
+
 import { Header, Footer } from '../components';
 
 function DefaultLayout2({ children }) {
