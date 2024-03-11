@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
-import * as postServices from '~/services/postServices'
+import * as postServices from '~/services/postServices';
 import { UseDispatch, useSelector } from 'react-redux';
 
-import Post from '~/components/Post'
+import Post from '~/components/Post';
 
 function Home() {
     const [page, setPage] = useState(0);
@@ -12,7 +12,7 @@ function Home() {
     const [fetching, setFetching] = useState(true);
     const observer = useRef(null);
 
-    const[likedPosts, setLikedPosts]= useState([])
+    const [likedPosts, setLikedPosts] = useState([]);
 
     /**
      * likedPosts Redux
@@ -20,8 +20,8 @@ function Home() {
     /**
      * users Redux
      */
-    const users= useSelector((state)=>state.users)
-    
+    const users = useSelector((state) => state.users);
+
     const lastPostElementRef = useCallback(
         (node) => {
             if (loading || !fetching) return; // if the data is loading or no data to show -> do nothing
@@ -35,29 +35,29 @@ function Home() {
             if (node) observer.current.observe(node);
             // eslint-disable-next-line react-hooks/exhaustive-deps
         },
-        [loading, fetching]
+        [loading, fetching],
     );
 
     const fetchLikedPost = async () => {
         const response = await postServices.getAllLikedPosts();
         if (response) {
-            setLikedPosts(prev => [...response.data]);
+            setLikedPosts((prev) => [...response.data]);
         }
     };
-    useEffect(()=>{
-        if(users.user){
-            fetchLikedPost()
+    useEffect(() => {
+        if (users.user) {
+            fetchLikedPost();
         }
-    }, [users.user])
+    }, [users.user]);
 
     const fetchPost = async () => {
         try {
             setLoading(true);
             const response = await postServices.getVideoFollowPage(page);
             if (response.data.length === 0) {
-                setMessage("Xin lỗi! Không còn gì để lướt nữa rồi");
+                setMessage('Xin lỗi! Không còn gì để lướt nữa rồi');
                 setFetching(false);
-                console.log("NO DATA TO SHOW");
+                console.log('NO DATA TO SHOW');
             } else {
                 setPosts((prev) => [...prev, ...response.data]);
             }
@@ -72,7 +72,7 @@ function Home() {
     useEffect(() => {
         if (fetching) {
             fetchPost();
-            fetchLikedPost()
+            fetchLikedPost();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fetching, page]);
@@ -82,9 +82,9 @@ function Home() {
             {posts.map((post, index) => {
                 if (posts.length === index + 1) {
                     //Su dung forwardRef cho viec truyen ref qua component
-                    return <Post ref={lastPostElementRef} key={index} post={post} likedPosts={likedPosts}/>;
+                    return <Post ref={lastPostElementRef} key={index} post={post} likedPosts={likedPosts} />;
                 } else {
-                    return <Post key={index} post={post} likedPosts={likedPosts}/>;
+                    return <Post key={index} post={post} likedPosts={likedPosts} />;
                 }
             })}
             {loading && <div className="w-full h-5 bg-green-50"></div>}

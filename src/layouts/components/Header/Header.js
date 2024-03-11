@@ -13,7 +13,7 @@ import {
     IconButton,
     Input,
     Image,
-    Collapse
+    Collapse,
 } from '@material-tailwind/react';
 import {
     CubeTransparentIcon,
@@ -39,7 +39,7 @@ import LoginForm from '../../../components/LoginForm';
 import NotifyMenu from '../../../components/NotifyMenu';
 import images from '~/assets/images';
 import config from '~/config';
-import * as request from '~/utils/httpRequest'
+import * as request from '~/utils/httpRequest';
 import { loginUserSuccess } from '~/features/user/userSlice';
 // profile menu component
 const profileMenuItems = [
@@ -70,7 +70,7 @@ function ProfileMenu() {
 
     const closeMenu = () => setIsMenuOpen(false);
     const dispatch = useDispatch();
-    const users = useSelector((state)=> state.users);
+    const users = useSelector((state) => state.users);
 
     return (
         <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
@@ -200,7 +200,7 @@ function NavListMenu() {
             <Menu allowHover open={isMenuOpen} handler={setIsMenuOpen}>
                 <MenuHandler>
                     <Link to={config.routes.home}>
-                        <Typography   variant="small" className="font-normal">
+                        <Typography variant="small" className="font-normal">
                             <MenuItem className="hidden items-center gap-2 font-medium text-blue-gray-900 lg:flex lg:rounded-full">
                                 <Square3Stack3DIcon className="h-[18px] w-[18px] text-blue-gray-500" /> Pages{' '}
                                 <ChevronDownIcon
@@ -254,11 +254,7 @@ function NavList() {
             <NavListMenu />
             {navListItems.map(({ label, icon, path }, key) => (
                 <Link to={path} key={label}>
-                    <Typography
-                        variant="small"
-                        color="gray"
-                        className="font-medium text-blue-gray-500"
-                    >
+                    <Typography variant="small" color="gray" className="font-medium text-blue-gray-500">
                         <MenuItem className="flex items-center gap-2 lg:rounded-full">
                             {React.createElement(icon, { className: 'h-[18px] w-[18px]' })}{' '}
                             <span className="text-gray-900"> {label}</span>
@@ -280,17 +276,17 @@ function Header() {
     }, []);
 
     const dispatch = useDispatch();
-    const users = useSelector((state)=> state.users);
-    console.log(users)
+    const users = useSelector((state) => state.users);
+    console.log(users);
 
-    useEffect(()=>{
-        const storageUser = JSON.parse(localStorage.getItem("user"));
-        if(storageUser != null){
+    useEffect(() => {
+        const storageUser = JSON.parse(localStorage.getItem('user'));
+        if (storageUser != null) {
             request.updateToken(storageUser.token);
-            dispatch(loginUserSuccess(storageUser))
+            dispatch(loginUserSuccess(storageUser));
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <Navbar fullWidth className="fixed top-0 w-full p-2 sm:mx-auto md:mx-0  lg:pl-6 ">

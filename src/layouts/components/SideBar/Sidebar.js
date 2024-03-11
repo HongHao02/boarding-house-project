@@ -29,9 +29,8 @@ function Sidebar() {
     const [showNav, setShowNav] = useState(true);
 
     const dispatch = useDispatch();
-    const users = useSelector((state)=> state.users);
-    console.log("USER SIDEBAR ", users)
-
+    const users = useSelector((state) => state.users);
+    console.log('USER SIDEBAR ', users);
 
     return (
         <>
@@ -43,10 +42,12 @@ function Sidebar() {
                 }  h-screen bg-white p-4 xl:mt-[2px] fixed overflow-y-auto  duration-500 border-1 rounded-md origin-right`}
             >
                 <IoChevronBackCircle
-                    className={`${!open && 'rotate-180'} hidden lg:block absolute cursor-pointer right-0 top-11 w-7 h-7 `}
+                    className={`${
+                        !open && 'rotate-180'
+                    } hidden lg:block absolute cursor-pointer right-0 top-11 w-7 h-7 `}
                     onClick={() => setOpen(!open)}
                 />
-                <Link to={ users.user ? `/:${users.user.user.username}` : config.routes.home}>
+                <Link to={users.user ? `/:${users.user.user.username}` : config.routes.home}>
                     <div className="flex items-center p-5 gap-x-4 h-30">
                         <Avatar
                             variant="rounded"
