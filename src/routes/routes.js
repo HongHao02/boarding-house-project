@@ -9,7 +9,7 @@ import Memory from '~/pages/Memory';
 import Profile from '~/pages/Profile';
 import Reservation from '~/pages/Reservation';
 import Search from '~/pages/Search';
-import Video from '~/pages/Video';
+import Video from '~/pages/Video'
 
 //publicRoutes for not log in
 const publicRoutes = [
