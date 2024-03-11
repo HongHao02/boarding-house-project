@@ -6,7 +6,7 @@ const routes = {
     memory: '/memory',
     post: '/post',
     createpost: '/createpost',
-    profile: '/:profile',
+    profile: '/:username',
     reservation: '/reservation',
     search: '/search',
     video: '/video'
