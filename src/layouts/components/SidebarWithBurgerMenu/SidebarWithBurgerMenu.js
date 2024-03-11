@@ -217,8 +217,8 @@ export default function SidebarWithBurgerMenu() {
             </Typography>
             <div className="mt-4 flex gap-3">
               <Typography
-                as="a"
-                href="#"
+                // as="a"
+                // href="#"
                 variant="small"
                 className="font-medium opacity-80"
                 onClick={() => setOpenAlert(false)}
@@ -226,8 +226,8 @@ export default function SidebarWithBurgerMenu() {
                 Dismiss
               </Typography>
               <Typography
-                as="a"
-                href="#"
+                // as="a"
+                // href="#"
                 variant="small"
                 className="font-medium"
               >

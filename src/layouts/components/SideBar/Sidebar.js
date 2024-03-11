@@ -10,7 +10,7 @@ import { Tooltip } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@material-tailwind/react';
 import { CiLogout } from 'react-icons/ci';
-import { HiMenu } from 'react-icons/hi';
+import { useDispatch, useSelector } from 'react-redux';
 
 import images from '~/assets/images';
 import config from '~/config';
@@ -27,6 +27,12 @@ const menuSidebar = [
 function Sidebar() {
     const [open, setOpen] = useState(true);
     const [showNav, setShowNav] = useState(true);
+
+    const dispatch = useDispatch();
+    const users = useSelector((state)=> state.users);
+    console.log("USER SIDEBAR ", users)
+
+
     return (
         <>
             {/* <HiMenu className="sm:block lg:hidden w-5 h-5 " onClick={() => setShowNav(!showNav)} /> */}
@@ -40,13 +46,13 @@ function Sidebar() {
                     className={`${!open && 'rotate-180'} hidden lg:block absolute cursor-pointer right-0 top-11 w-7 h-7 `}
                     onClick={() => setOpen(!open)}
                 />
-                <Link to={config.routes.profile}>
+                <Link to={ users.user ? `/:${users.user.user.username}` : config.routes.home}>
                     <div className="flex items-center p-5 gap-x-4 h-30">
                         <Avatar
                             variant="rounded"
                             size="sm"
                             alt="nhiệt ba"
-                            src={images.NhietBa}
+                            src={users.user ? users.user.user.avt : images.noAVTMale}
                             withBorder={true}
                             className={`${open && 'rotate-[360deg]'} w-auto rounded-full cursor-pointer duration-500`}
                         />
@@ -59,7 +65,7 @@ function Sidebar() {
                 </Link>
                 <ul className="mt-4 border-y-2">
                     {menuSidebar.map((item, index) => (
-                        <Tooltip content={item.lable} placement="right" className={`${open && 'hidden'}`}>
+                        <Tooltip key={index} content={item.lable} placement="right" className={`${open && 'hidden'}`}>
                             <Link to={item.path}>
                                 <li
                                     key={index}

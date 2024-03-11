@@ -7,7 +7,7 @@ function DefaultLayout({ children }) {
     return (
         <div className="flex flex-col h-screen">
             <Header />
-            <div className="flex flex-row mt-20  md:mt-14 overflow-hidden">
+            <div className="flex flex-row mt-20  md:mt-14 overflow-hidden w-full">
                 <div className="lg:hidden fixed overflow-y-auto ">
                     <SidebarWithBurgerMenu/>
                 </div>
