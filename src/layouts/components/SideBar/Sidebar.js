@@ -48,14 +48,14 @@ function Sidebar() {
                     onClick={() => setOpen(!open)}
                 />
                 <Link to={users.user ? `/:${users.user.user.username}` : config.routes.home}>
-                    <div className="flex items-center p-5 gap-x-4 h-30">
+                    <div className="flex items-center p-5 gap-x-4">
                         <Avatar
                             variant="rounded"
                             size="sm"
                             alt="nhiệt ba"
                             src={users.user ? users.user.user.avt : images.noAVTMale}
                             withBorder={true}
-                            className={`${open && 'rotate-[360deg]'} w-auto rounded-full cursor-pointer duration-500`}
+                            className={`${open && 'rotate-[360deg]'}  rounded-full cursor-pointer duration-500`}
                         />
 
                         <div className={` origin-left font-bold text-md flex-col duration-500 ${!open && 'scale-0'}`}>

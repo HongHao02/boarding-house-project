@@ -21,6 +21,7 @@ const publicRoutes = [
     { path: config.routes.profile, component: Profile, layout: HeaderOnly },
     { path: config.routes.reservation, component: Reservation},
     { path: config.routes.video, component: Video },
+    { path: config.routes.post, component: Post },
 ];
 
 //privateRoutes for log in

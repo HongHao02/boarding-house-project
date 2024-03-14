@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import * as postServices from '~/services/postServices';
-import { UseDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import Post from '~/components/Post';
+import CardPlacehoderSkeleton from '~/components/Skeleton';
 
 function Home() {
     const [page, setPage] = useState(0);
@@ -22,6 +23,9 @@ function Home() {
      */
     const users = useSelector((state) => state.users);
 
+    /**
+     * for crolling at the last element
+     */
     const lastPostElementRef = useCallback(
         (node) => {
             if (loading || !fetching) return; // if the data is loading or no data to show -> do nothing
@@ -47,6 +51,8 @@ function Home() {
     useEffect(() => {
         if (users.user) {
             fetchLikedPost();
+        }else{
+            setLikedPosts([])
         }
     }, [users.user]);
 
@@ -87,7 +93,7 @@ function Home() {
                     return <Post key={index} post={post} likedPosts={likedPosts} />;
                 }
             })}
-            {loading && <div className="w-full h-5 bg-green-50"></div>}
+            {loading && <CardPlacehoderSkeleton/>}
             {message && <div className="text-lg text-gray-600">{message}</div>}
         </div>
     );

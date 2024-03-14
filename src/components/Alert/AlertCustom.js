@@ -12,26 +12,26 @@ const AlertCustom = ({ type, message, onClose }) => {
 
     useEffect(() => {
         const timer = setTimeout(() => {
-            setShow(false);
-            onClose()
+            onClose();
         }, 5000); // 5 giây
         //clear function before component umnount
         return () => clearTimeout(timer);
     }, [onClose]);
 
     return (
-        <Alert
-            open={show}
-            onClose={handleShow}
-            animate={{
-                mount: { y: 0 },
-                unmount: { y: -200 },
-            }}
-            title="Bạn chưa đăng nhập vui lòng đăng nhập!"
-            className={`top-0 fixed left-0 w-full text-white bg-gray-500 flex justify-center`}
-        >
-            {/* <span className='mr-2'>{message}</span> */}
-        </Alert>
+        <div className={`${type=== 'success' ? 'bg-green-600': 'bg-red-600'}`}>
+            <Alert
+                open={show}
+                onClose={handleShow}
+                // animate={{
+                //     mount: { y: 0 },
+                //     unmount: { y: -200 },
+                // }}
+                className={`top-0 fixed left-0 w-full h-auto text-white ${type==='success'? 'bg-green-400' : 'bg-red-400'}  flex justify-center`}
+            >
+                {message}
+            </Alert>
+        </div>
     );
 };
 

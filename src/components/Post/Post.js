@@ -21,6 +21,7 @@ function Post({ post, likedPosts, ...passProps }, ref) {
     const [like, setLike] = useState(post.countLikes);
     const [showDiaglog, setShowDiaglog] = useState(false);
     const [showLoginDialog, setshowLoginDialog] = useState(false);
+    const [active, setActive] = useState(post.fileSet[0].url);
     //likedPost
     const [liked, setLiked] = useState(() => {
         if (likedPosts.length !== 0) {
@@ -38,11 +39,13 @@ function Post({ post, likedPosts, ...passProps }, ref) {
             // Kiểm tra xem post có trong danh sách likedPosts hay không
             const isLiked = likedPosts.some((likedPost) => likedPost.idBaiViet === post.idBaiViet);
             setLiked(isLiked);
+        } else {
+            setLiked(false);
         }
     }, [likedPosts, post]);
 
     //Blur image
-    const [load, setLoad] = useState(false);
+    // const [load, setLoad] = useState(false);
     ////Alert
     const [alert, setAlert] = useState(null);
     const handleCloseAlert = () => {
@@ -56,24 +59,24 @@ function Post({ post, likedPosts, ...passProps }, ref) {
         'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80';
     // const blurImage =
     //     'https://images.search.yahoo.com/images/view;_ylt=AwrOtgdJS.tl1CUUpHaJzbkF;_ylu=c2VjA3NyBHNsawNpbWcEb2lkAzM1OThlOTZlOGQ0Zjc3ODI0MjNlMTg0NGUyN2JmYmFkBGdwb3MDNDkEaXQDYmluZw--?back=https%3A%2F%2Fimages.search.yahoo.com%2Fsearch%2Fimages%3Fp%3Dblur%2Bimage%26type%3DE210US885G91814%26fr%3Dmcafee%26fr2%3Dpiv-web%26tab%3Dorganic%26ri%3D49&w=4500&h=3000&imgurl=www.bdsc.school.nz%2Fwp-content%2Fuploads%2F2017%2F03%2Fbackground-blur-1.jpg&rurl=http%3A%2F%2Fwww.bdsc.school.nz%2Fbackground-blur-1-2%2F&size=1328.3KB&p=blur+image&oid=3598e96e8d4f7782423e1844e27bfbad&fr2=piv-web&fr=mcafee&tt=background+blur+%281%29+%E2%80%A2+BDSC&b=0&ni=21&no=49&ts=&tab=organic&sigr=tP2kPuiaKvEz&sigb=Z95aSQHVDM7N&sigi=0D4QBMq2YRLG&sigt=WmQzVwh9D_G1&.crumb=WB8aweCmcY4&fr=mcafee&fr2=piv-web&type=E210US885G91814';
-    const maxVisibleImage = 3;
-    const visibleImages = post.fileSet.slice(0, maxVisibleImage); // Lấy danh sách ảnh hiển thị được
+    // const maxVisibleImage = 3;
+    // const visibleImages = post.fileSet.slice(0, maxVisibleImage); // Lấy danh sách ảnh hiển thị được
     // const hiddenImages = post.fileSet.slice(maxVisibleImage); // Lấy danh sách ảnh ẩn
     // const postRef = useRef();
 
-    function getHeight(numImages) {
-        if (numImages === 1 || numImages === 2) {
-            return 'full';
-        }
-        return '1/2';
-    }
-    function getWidth(numImages) {
-        if (numImages === 1) {
-            return 'full';
-        } else {
-            return '1/2';
-        }
-    }
+    // function getHeight(numImages) {
+    //     if (numImages === 1 || numImages === 2) {
+    //         return 'full';
+    //     }
+    //     return '1/2';
+    // }
+    // function getWidth(numImages) {
+    //     if (numImages === 1) {
+    //         return 'full';
+    //     } else {
+    //         return '1/2';
+    //     }
+    // }
     const toggleExpand = () => {
         setExpand(!expand);
     };
@@ -112,9 +115,9 @@ function Post({ post, likedPosts, ...passProps }, ref) {
     /**
      * blur image when load
      */
-    const handleLoadImage = () => {
-        setLoad(true);
-    };
+    // const handleLoadImage = () => {
+    //     setLoad(true);
+    // };
 
     return (
         <div ref={ref} className="bg-white shadow-md rounded-lg p-4 mb-4 w-[50%] mx-auto">
@@ -205,12 +208,6 @@ function Post({ post, likedPosts, ...passProps }, ref) {
             {/* Phần 3: Ảnh bài viết */}
             <div className="mb-2 max-h-[500px] w-full flex overflow-hidden flex-wrap justify-between">
                 {/* {visibleImages.map((image, index) => (
-                    <img key={index} src={image.url} alt={`Ảnh ${index}`} className="w-auto" />
-                ))}
-                {hiddenImages.length > 0 && (
-                    <div className="w-auto m-1 flex justify-center items-center bg-gray-200">{hiddenImages.length}</div>
-                )} */}
-                {visibleImages.map((image, index) => (
                     <div
                         key={index}
                         className={`flex-grow w-${getWidth(visibleImages.length)} h-${getHeight(
@@ -231,7 +228,28 @@ function Post({ post, likedPosts, ...passProps }, ref) {
                     <div className="flex-grow w-1/2  p-1 bg-gray-200 flex items-center justify-center">
                         <p className="text-gray-600">+{post.fileSet.length - 3} ảnh</p>
                     </div>
-                )}
+                )} */}
+                <div className="h-full grid gap-4">
+                    <div>
+                        <img
+                            className="h-[300px] w-full max-w-full rounded-lg object-cover object-center md:h-[400px]"
+                            src={active}
+                            alt=""
+                        />
+                    </div>
+                    <div className="grid grid-cols-5 gap-4">
+                        {post.fileSet.map(({ url }, index) => (
+                            <div key={index}>
+                                <img
+                                    onClick={() => setActive(url)}
+                                    src={url}
+                                    className="h-20 max-w-full cursor-pointer rounded-lg object-cover object-center"
+                                    alt="gallery"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </div>
 
             {/* Phần 4: Nút like và bình luận */}

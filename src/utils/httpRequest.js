@@ -24,6 +24,11 @@ export const post = async (path, options = {}) => {
     const response = await httpRequest.post(path, options);
     return response.data;
 };
+
+export const postWithFile = async (path, formData, options={}) => {
+    const response = await httpRequest.post(path,formData, options);
+    return response.data;
+};
 export const put = async (path, options = {}) => {
     const response = await httpRequest.put(path, options);
     console.log("put response", response);

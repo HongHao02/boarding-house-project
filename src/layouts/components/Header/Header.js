@@ -38,6 +38,8 @@ import images from '~/assets/images';
 import config from '~/config';
 import * as request from '~/utils/httpRequest';
 import { loginUserSuccess } from '~/features/user/userSlice';
+import SignOut from './SignOut';
+
 // profile menu component
 const profileMenuItems = [
     {
@@ -55,10 +57,12 @@ const profileMenuItems = [
     {
         label: 'Help',
         icon: LifebuoyIcon,
+        url: 'https://www.facebook.com/honghao.nguyenphan/',
     },
     {
         label: 'Sign Out',
         icon: PowerIcon,
+        component: <SignOut />,
     },
 ];
 
@@ -130,7 +134,7 @@ function ProfileMenu() {
             </MenuHandler>
 
             <MenuList className="p-1">
-                {profileMenuItems.map(({ label, icon }, key) => {
+                {profileMenuItems.map(({ label, icon, onClick, component }, key) => {
                     const isLastItem = key === profileMenuItems.length - 1;
                     return (
                         <MenuItem
@@ -144,14 +148,16 @@ function ProfileMenu() {
                                 className: `h-4 w-4 ${isLastItem ? 'text-red-500' : ''}`,
                                 strokeWidth: 2,
                             })}
-                            <Typography
-                                as="span"
-                                variant="small"
-                                className="font-normal"
-                                color={isLastItem ? 'red' : 'inherit'}
-                            >
-                                {label}
-                            </Typography>
+                            {component || (
+                                <Typography
+                                    variant="small"
+                                    className="font-normal"
+                                    color={isLastItem ? 'red' : 'inherit'}
+                                    onClick={onClick ? onClick : () => {}}
+                                >
+                                    {label}
+                                </Typography>
+                            )}
                         </MenuItem>
                     );
                 })}
@@ -311,7 +317,7 @@ function Header() {
                 >
                     <Bars2Icon className="h-6 w-6" />
                 </IconButton>
-                <LoginForm />
+                {!users.user && <LoginForm />}
                 <ProfileMenu />
             </div>
             <Collapse open={isNavOpen} className="overflow-scroll">
