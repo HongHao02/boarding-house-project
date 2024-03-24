@@ -154,6 +154,7 @@ function PostCreatePattern({ onChange }) {
             console.log('CREATE_POST ', response);
         } else {
             setShowDialog(!showDiaglog);
+            setLoading(false);
             console.log('CREATE_POST FAILED');
         }
     };
@@ -335,9 +336,10 @@ function PostCreatePattern({ onChange }) {
                     </Button>
                     <Button
                         loading={loading}
-                        className="flex items-center gap-2"
+                        className={`flex items-center gap-2 `}
                         disabled={accept}
                         onClick={handleCreatePost}
+                        color={accept ? 'gray' : 'green'}
                     >
                         <FaCloudUploadAlt />
                         Đăng bài

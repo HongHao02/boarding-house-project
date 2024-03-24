@@ -3,19 +3,18 @@ import {
     Button,
     Dialog,
     Card,
-    CardHeader,
     CardBody,
     CardFooter,
     Typography,
     Input,
     Checkbox,
-    Spinner,
 } from '@material-tailwind/react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
-import { updateLogin, updateUser, deleteUser, sellectUser } from '../../features/user/userSlice';
 
 import { loginUser } from '../../features/user/AuthThunk';
+import SignUpForm from '../SignUpForm';
+import { DialogCustomAnimation } from '../Dialog';
 
 function LoginForm() {
     const [open, setOpen] = React.useState(false);
@@ -66,6 +65,9 @@ function LoginForm() {
                         <div className="-ml-2.5 -mt-3">
                             <Checkbox label="Remember Me" />
                         </div>
+                        {users.error !== null && (
+                            <div className="text-red-500 flex justify-center items-center">{users.error}</div>
+                        )}
                     </CardBody>
                     <CardFooter className="pt-0">
                         {users.loading ? (
@@ -84,19 +86,42 @@ function LoginForm() {
                             </Button>
                         )}
 
-                        <Typography variant="small" className="mt-4 flex justify-center">
+                        {/* <Typography variant="small" className="mt-4 flex justify-center">
                             Don&apos;t have an account?
                             <Typography
                                 // as="a"
                                 // href="#signup"
+                                
                                 variant="small"
                                 color="blue-gray"
-                                className="ml-1 font-bold"
+                                className="ml-1 font-bold pointer"
                                 onClick={handleOpen}
                             >
                                 Sign up
                             </Typography>
-                        </Typography>
+                        </Typography> */}
+                        <DialogCustomAnimation
+                            title="Sign up"
+                            type='sign-up'
+                            button={
+                                <Typography variant="small" className="mt-4 flex justify-center">
+                                    Don&apos;t have an account?
+                                    <Typography
+                                        // as="a"
+                                        // href="#signup"
+
+                                        variant="small"
+                                        color="blue-gray"
+                                        className="ml-1 font-bold cursor-pointer"
+                                    >
+                                        Sign up
+                                    </Typography>
+                                </Typography>
+                            }
+                        >
+                            {/* <AddRoom tenNhaTro={nhaTro.tenNhaTro} lau={isActiveLau}></AddRoom> */}
+                            <SignUpForm></SignUpForm>
+                        </DialogCustomAnimation>
                     </CardFooter>
                 </Card>
             </Dialog>

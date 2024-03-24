@@ -22,6 +22,7 @@ const publicRoutes = [
     { path: config.routes.reservation, component: Reservation},
     { path: config.routes.video, component: Video },
     { path: config.routes.post, component: Post },
+    { path: config.routes.manage, component: Manage, layout: NoRightSidebar },
 ];
 
 //privateRoutes for log in

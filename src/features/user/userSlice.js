@@ -17,6 +17,7 @@ export const userSlice = createSlice({
             // const { data, status, headers } = action.payload;
             // state.headers= headers['content-type'];
             state.loading = false;
+            state.error= null;
             state.user = action.payload;
         },
         loginUserFailure: (state, action) => {

@@ -1,11 +1,9 @@
 import Header from '~/layouts/components/Header'
 function HeaderOnly({children}) {
-    return ( <div className="flex-col">
+    return ( <>
         <Header></Header>
-        <div>
-            {children}
-        </div>
-    </div> );
+        <div className='mt-16'>{children}</div>
+    </> );
 }
 
 export default HeaderOnly;

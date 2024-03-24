@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { IoChevronBackCircle } from 'react-icons/io5';
-import { FaUserAstronaut, FaMemory } from 'react-icons/fa';
+import { FaMemory } from 'react-icons/fa';
 import { IoLogoYoutube } from 'react-icons/io';
 import { MdManageAccounts } from 'react-icons/md';
 import { IoCreateSharp } from 'react-icons/io5';
@@ -10,7 +10,7 @@ import { Tooltip } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 import { Avatar } from '@material-tailwind/react';
 import { CiLogout } from 'react-icons/ci';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import images from '~/assets/images';
 import config from '~/config';
@@ -26,9 +26,8 @@ const menuSidebar = [
 
 function Sidebar() {
     const [open, setOpen] = useState(true);
-    const [showNav, setShowNav] = useState(true);
+    // const [showNav, setShowNav] = useState(true);
 
-    const dispatch = useDispatch();
     const users = useSelector((state) => state.users);
     console.log('USER SIDEBAR ', users);
 
@@ -53,14 +52,16 @@ function Sidebar() {
                             variant="rounded"
                             size="sm"
                             alt="nhiệt ba"
-                            src={users.user ? users.user.user.avt : images.noAVTMale}
+                            src={users.user && users.user.user.avt ? users.user.user.avt : images.noAVTMale}
                             withBorder={true}
                             className={`${open && 'rotate-[360deg]'}  rounded-full cursor-pointer duration-500`}
                         />
 
                         <div className={` origin-left font-bold text-md flex-col duration-500 ${!open && 'scale-0'}`}>
-                            <h1>Hong Hao</h1>
-                            <span className="text-[10px] text-light-green-600">honghaocp@gmail.com</span>
+                            <h1>{users.user && users.user.user.firstName ? users.user.user.firstName : 'NO_NAME'}</h1>
+                            <span className="text-[10px] text-light-green-600">
+                                {users.user ? users.user.user.username : 'Tài khoản khách'}
+                            </span>
                         </div>
                     </div>
                 </Link>

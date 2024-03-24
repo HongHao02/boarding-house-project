@@ -7,6 +7,7 @@ import { forwardRef, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { IoHeartCircleSharp } from 'react-icons/io5';
 import { IoHeartDislike } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 import PostTimeStamp from '../Time/PostTimeStamp';
 import * as postServices from '../../services/postServices';
@@ -129,23 +130,28 @@ function Post({ post, likedPosts, ...passProps }, ref) {
             )}
             {alert && <AlertCustom type={alert.type} message={alert.message} onClose={handleCloseAlert} />}
             {/* Phần 1: Ảnh và thông tin người đăng */}
-            <div className="flex items-center mb-4">
-                <img src={post.user.avt || fallback} alt={post.user.lastName} className="w-10 h-10 rounded-full mr-2" />
-                <div className="">
-                    <p className="flex justify-start font-bold">
-                        {post.user.firstName && post.user.lastName
-                            ? `${post.user.firstName} ${post.user.lastName}`
-                            : post.user.username}
-                    </p>
-                    <PostTimeStamp published_at={post.published_at} />
+            <Link to={`/:${post.user.username}`}>
+                <div className="flex items-center mb-4">
+                    <img
+                        src={post.user.avt || fallback}
+                        alt={post.user.lastName}
+                        className="w-10 h-10 rounded-full mr-2"
+                    />
+                    <div className="">
+                        <p className="flex justify-start font-bold">
+                            {post.user.firstName && post.user.lastName
+                                ? `${post.user.firstName} ${post.user.lastName}`
+                                : post.user.username}
+                        </p>
+                        <PostTimeStamp published_at={post.published_at} />
+                    </div>
+                    <div className="ml-auto">
+                        <button>
+                            <MdOutlineMoreHoriz className="w-5 h-5 ml-auto" />
+                        </button>
+                    </div>
                 </div>
-                <div className="ml-auto">
-                    <button>
-                        <MdOutlineMoreHoriz className="w-5 h-5 ml-auto" />
-                    </button>
-                </div>
-            </div>
-
+            </Link>
             <div className="flex justify-start mb-2 text-justify">
                 {expand ? (
                     <div>
@@ -167,9 +173,7 @@ function Post({ post, likedPosts, ...passProps }, ref) {
                     </div>
                 )}
             </div>
-
             {/* Phần 2: Thông tin về phòng cần giới thiệu */}
-
             <div className="text-[10px] grid grid-cols-2 space-x-2 mb-2">
                 <div className="flex-col space-y-2">
                     <div className="flex items-center border-2 rounded-md bg-gray-100  p-1">
@@ -204,34 +208,34 @@ function Post({ post, likedPosts, ...passProps }, ref) {
                 <IoMapOutline />
                 <span className="ml-2">{`${post.phong.tenDuong}, ${post.phong.tenXa}, ${post.phong.tenHuyen}, ${post.phong.tenTinh}`}</span>
             </div>
-
             {/* Phần 3: Ảnh bài viết */}
             <div className="mb-2 max-h-[500px] w-full flex overflow-hidden flex-wrap justify-between">
                 {/* {visibleImages.map((image, index) => (
-                    <div
-                        key={index}
-                        className={`flex-grow w-${getWidth(visibleImages.length)} h-${getHeight(
-                            visibleImages.length,
-                        )} p-1`}
-                    >
-                        <img
-                            src={image.url}
-                            alt={`Ảnh ${index}`}
-                            onLoad={handleLoadImage}
-                            className={`w-full h-full object-cover transition-opacity duration-300 ${
-                                load ? 'opacity-100' : 'opacity-0'
-                            }`}
-                        />
-                    </div>
-                ))}
-                {post.fileSet.length > 4 && (
-                    <div className="flex-grow w-1/2  p-1 bg-gray-200 flex items-center justify-center">
-                        <p className="text-gray-600">+{post.fileSet.length - 3} ảnh</p>
-                    </div>
-                )} */}
+                        <div
+                            key={index}
+                            className={`flex-grow w-${getWidth(visibleImages.length)} h-${getHeight(
+                                visibleImages.length,
+                            )} p-1`}
+                        >
+                            <img
+                                src={image.url}
+                                alt={`Ảnh ${index}`}
+                                onLoad={handleLoadImage}
+                                className={`w-full h-full object-cover transition-opacity duration-300 ${
+                                    load ? 'opacity-100' : 'opacity-0'
+                                }`}
+                            />
+                        </div>
+                    ))}
+                    {post.fileSet.length > 4 && (
+                        <div className="flex-grow w-1/2  p-1 bg-gray-200 flex items-center justify-center">
+                            <p className="text-gray-600">+{post.fileSet.length - 3} ảnh</p>
+                        </div>
+                    )} */}
                 <div className="h-full grid gap-4">
                     <div>
                         <img
+                            loading="lazy"
                             className="h-[300px] w-full max-w-full rounded-lg object-cover object-center md:h-[400px]"
                             src={active}
                             alt=""
@@ -251,7 +255,6 @@ function Post({ post, likedPosts, ...passProps }, ref) {
                     </div>
                 </div>
             </div>
-
             {/* Phần 4: Nút like và bình luận */}
             <div className="flex items-center mb-2">
                 <button className="flex items-center text-gray-700 mr-4 ">

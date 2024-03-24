@@ -19,7 +19,7 @@ const AlertCustom = ({ type, message, onClose }) => {
     }, [onClose]);
 
     return (
-        <div className={`${type=== 'success' ? 'bg-green-600': 'bg-red-600'}`}>
+        <div className={`z-50 ${type=== 'success' ? 'bg-green-600': 'bg-red-600'}`}>
             <Alert
                 open={show}
                 onClose={handleShow}

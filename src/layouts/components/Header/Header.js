@@ -39,6 +39,7 @@ import config from '~/config';
 import * as request from '~/utils/httpRequest';
 import { loginUserSuccess } from '~/features/user/userSlice';
 import SignOut from './SignOut';
+import Search from '~/layouts/components/Search'
 
 // profile menu component
 const profileMenuItems = [
@@ -75,7 +76,7 @@ function ProfileMenu() {
 
     return (
         <Menu open={isMenuOpen} handler={setIsMenuOpen} placement="bottom-end">
-            <div className="hidden items-center gap-x-2 lg:flex  lg:justify-end lg:grow lg:ml-5">
+            {/* <div className="hidden items-center gap-x-2 lg:flex  lg:justify-end lg:grow lg:ml-5">
                 <div className="relative flex w-full gap-2 md:w-max">
                     <Input
                         type="search"
@@ -107,7 +108,8 @@ function ProfileMenu() {
                 <Button size="md" className="rounded-lg ">
                     Search
                 </Button>
-            </div>
+            </div> */}
+            <Search/>
             <div className="flex justify-end flex-grow-0 ">
                 <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} />
                 <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} />
@@ -124,7 +126,7 @@ function ProfileMenu() {
                         size="sm"
                         alt="tania andrew"
                         className="border border-gray-900 p-0.5"
-                        src={users.user ? users.user.user.avt : images.noAVTMale}
+                        src={users.user &&  users.user.user.avt ? users.user.user.avt : images.noAVTMale}
                     />
                     <ChevronDownIcon
                         strokeWidth={2.5}
@@ -292,7 +294,7 @@ function Header() {
     }, []);
 
     return (
-        <Navbar fullWidth className="fixed top-0 w-full p-2 sm:mx-auto md:mx-0  lg:pl-6 ">
+        <Navbar fullWidth className="fixed z-40 top-0 w-full p-2 sm:mx-auto md:mx-0  lg:pl-6 ">
             <div className="relative mx-auto my-auto flex items-center justify-between text-blue-gray-900 ">
                 <Link to={config.routes.home}>
                     <Typography
