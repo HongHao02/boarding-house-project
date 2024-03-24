@@ -19,19 +19,21 @@ const AlertCustom = ({ type, message, onClose }) => {
     }, [onClose]);
 
     return (
-        <div className={`z-50 ${type=== 'success' ? 'bg-green-600': 'bg-red-600'}`}>
-            <Alert
-                open={show}
-                onClose={handleShow}
-                // animate={{
-                //     mount: { y: 0 },
-                //     unmount: { y: -200 },
-                // }}
-                className={`top-0 fixed left-0 w-full h-auto text-white ${type==='success'? 'bg-green-400' : 'bg-red-400'}  flex justify-center`}
-            >
-                {message}
-            </Alert>
-        </div>
+        // <div className={`z-[9999] ${type=== 'success' ? 'bg-green-600': 'bg-red-600'}`}>
+        <Alert
+            open={show}
+            onClose={handleShow}
+            // animate={{
+            //     mount: { y: 0 },
+            //     unmount: { y: -200 },
+            // }}
+            className={`top-0 z-[9999] fixed left-0 w-full h-auto text-white ${
+                type === 'success' ? 'bg-green-400' : 'bg-red-400'
+            }  flex justify-center`}
+        >
+            {message}
+        </Alert>
+        // </div>
     );
 };
 

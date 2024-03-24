@@ -60,7 +60,7 @@ export default function PostCreate({ className, nhaTroList }) {
                     </Tab>
                 ))}
             </TabsHeader>
-            <TabsBody>
+            <TabsBody className='z-[9999]'>
                 {data.map(({ value, component, desc }) => (
                     <TabPanel key={value} value={value}>
                         {component || desc}

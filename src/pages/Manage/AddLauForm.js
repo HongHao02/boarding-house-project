@@ -11,7 +11,7 @@ const validationSchema = Yup.object().shape({
         .required('Vui lòng nhập số lầu'),
 });
 
-const AddLauForm = ({ tenNhaTro, lau }) => {
+const AddLauForm = ({ tenNhaTro, lau, idNhaTro }) => {
     useEffect(() => {
         const fetchLoaiNhaTro = async () => {
             const response = await chuTroServices.getAllLoaiPhong();
@@ -21,12 +21,13 @@ const AddLauForm = ({ tenNhaTro, lau }) => {
         };
         fetchLoaiNhaTro();
     }, []);
+    console.log("idNhaTro ", idNhaTro)
 
     
 
     const handleAddLau = (values) => {
         const data = {
-            idNhaTro: lau.lauID.idNhaTro,
+            idNhaTro: idNhaTro,
             sttLau: values.sttLau,
         };
         const fecthAddLau = async (data) => {

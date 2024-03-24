@@ -22,13 +22,13 @@ import AddRoomForm from './AddRoomForm';
 const TABLE_HEAD = ['Tên nhà trọ', 'idLau', 'Tầng', 'idPhong', 'Số phòng', 'Loại phòng', 'Giá phòng', 'Status', ''];
 const STT_LAU_LIST = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-
 export default function BoardingHouseTable({ nhaTro = {} }) {
     const [sttLau, setSttLau] = useState(0);
     const [isActiveLau, setIsActiveLau] = useState({});
 
     // const [isAddRoom, setIsAddRoom] = useState(false);
 
+    console.log("NHATRO ", nhaTro)
     console.log('NHATRO.lauSet ', nhaTro.lauSet);
     console.log('isActiveLau ', isActiveLau);
     console.log('STTLAU ', sttLau);
@@ -81,6 +81,7 @@ export default function BoardingHouseTable({ nhaTro = {} }) {
             </DialogDefault>} */}
 
             {Object.keys(nhaTro).length > 0 ? (
+                
                 <Card className="h-full w-full">
                     <CardHeader floated={false} shadow={false} className="rounded-none">
                         <div className="mb-4 flex flex-col justify-between gap-8 md:flex-row md:items-center">
@@ -124,14 +125,25 @@ export default function BoardingHouseTable({ nhaTro = {} }) {
                                                 toolTipContent="Thêm lầu"
                                             >
                                                 {/* <AddRoom tenNhaTro={nhaTro.tenNhaTro} lau={isActiveLau}></AddRoom> */}
-                                                <AddLauForm
-                                                    tenNhaTro={nhaTro.tenNhaTro}
-                                                    lau={isActiveLau}
-                                                ></AddLauForm>
+                                                <AddLauForm tenNhaTro={nhaTro.tenNhaTro} lau={isActiveLau}></AddLauForm>
                                             </DialogCustomAnimation>
                                         </>
                                     ) : (
-                                        <div className="font-bold text-red-900">Tầng chưa được tạo</div>
+                                        <>
+                                            <div className="font-bold text-red-900 flex items-center">Tầng chưa được tạo</div>
+                                            <DialogCustomAnimation
+                                                title="Thêm lầu mới"
+                                                button={
+                                                    <IconButton className="rounded-full">
+                                                        <IoMdAddCircleOutline className="w-6 h-6" />
+                                                    </IconButton>
+                                                }
+                                                toolTipContent="Thêm lầu"
+                                            >
+                                                {/* <AddRoom tenNhaTro={nhaTro.tenNhaTro} lau={isActiveLau}></AddRoom> */}
+                                                <AddLauForm tenNhaTro={nhaTro.tenNhaTro} idNhaTro={nhaTro.idNhaTro} lau={isActiveLau}></AddLauForm>
+                                            </DialogCustomAnimation>
+                                        </>
                                     )}
                                 </div>
                             </div>

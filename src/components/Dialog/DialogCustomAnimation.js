@@ -16,7 +16,7 @@ export default function DialogCustomAnimation({
 
     return (
         <>
-            {type === 'dialog-tooltip ' ? (
+            {type === 'dialog-tooltip' ? (
                 <Tooltip content={toolTipContent}>
                     {button && React.cloneElement(button, { onClick: handleOpen })}
                 </Tooltip>
