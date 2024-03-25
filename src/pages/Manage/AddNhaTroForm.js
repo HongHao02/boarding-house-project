@@ -1,10 +1,11 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { sellectAddresses } from '~/features/addresses/addressesSlice';
 import * as chuTroServices from '~/services/chutroServices';
+import { getNhaTroList } from '~/features/nhaTroList/nhaTroListThunk';
 
 const validationSchema = Yup.object().shape({
     tenNhaTro: Yup.string('Vui lòng nhập tên nhà trọ')
@@ -19,6 +20,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const AddNhaTroForm = () => {
+    //redux
+    const dispatch = useDispatch();
+    //state
     const { addresses } = useSelector(sellectAddresses);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitError, setSubmitError] = useState(null);
@@ -42,6 +46,7 @@ const AddNhaTroForm = () => {
                 if (response.data) {
                     setSubmitError(null);
                     alert(JSON.stringify('Thêm nhà trọ thành công', null, 2));
+                    dispatch(getNhaTroList());
                 } else {
                     setSubmitError(response.message);
                     // alert(JSON.stringify(response.message, null, 2));
@@ -105,7 +110,7 @@ const AddNhaTroForm = () => {
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm }) => {
                     handleAddNhaTro(values);
-                    resetForm()
+                    resetForm();
                 }}
             >
                 {(props) => (

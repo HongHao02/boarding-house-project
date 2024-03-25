@@ -1,31 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Input } from '@material-tailwind/react';
-import * as chuTroServices from '~/services/chutroServices';
 
+import { useDispatch } from 'react-redux';
+import { getNhaTroList } from '~/features/nhaTroList/nhaTroListThunk';
+import * as chuTroServices from '~/services/chutroServices';
 const validationSchema = Yup.object().shape({
-    sttLau: Yup.number("Số lầu phải là số")
+    sttLau: Yup.number('Số lầu phải là số')
         .min(0, 'Số lầu phải lớn hơn hoặc bằng 0')
         .max(10, 'Số lầu phải nhỏ hơn 10')
         .required('Vui lòng nhập số lầu'),
 });
 
 const AddLauForm = ({ tenNhaTro, lau, idNhaTro }) => {
-    useEffect(() => {
-        const fetchLoaiNhaTro = async () => {
-            const response = await chuTroServices.getAllLoaiPhong();
-            if (response.data.length > 0) {
-                console.log('LOAIPHONG ', response.data);
-            }
-        };
-        fetchLoaiNhaTro();
-    }, []);
-    console.log("idNhaTro ", idNhaTro)
+    const dispatch = useDispatch();
 
-    
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
+    console.log('idNhaTro ', idNhaTro);
 
     const handleAddLau = (values) => {
+        setIsSubmitting(true);
         const data = {
             idNhaTro: idNhaTro,
             sttLau: values.sttLau,
@@ -36,13 +32,18 @@ const AddLauForm = ({ tenNhaTro, lau, idNhaTro }) => {
             if (!response.error) {
                 console.log('ADD_LAU ', response);
                 if (response.data) {
+                    setSubmitError(null);
                     alert(JSON.stringify('Thêm lầu thành công', null, 2));
+                    dispatch(getNhaTroList());
                 } else {
-                    alert(JSON.stringify(response.message, null, 2));
+                    setSubmitError(response.message);
+                    // alert(JSON.stringify(response.message, null, 2));
                 }
             } else {
-                alert(JSON.stringify(response, null, 2));
+                setSubmitError(response.error);
+                // alert(JSON.stringify(response, null, 2));
             }
+            setIsSubmitting(false);
         };
         fecthAddLau(data);
     };
@@ -53,7 +54,7 @@ const AddLauForm = ({ tenNhaTro, lau, idNhaTro }) => {
             <Input label={`Nhà trọ: ${tenNhaTro}`} disabled />
             <Formik
                 initialValues={{
-                    sttLau: 0
+                    sttLau: 0,
                 }}
                 validationSchema={validationSchema}
                 onSubmit={(values, { resetForm, setSubmitting }) => {
@@ -69,7 +70,6 @@ const AddLauForm = ({ tenNhaTro, lau, idNhaTro }) => {
                                 Tầng lầu
                             </label>
                             <Field
-                                
                                 type="number"
                                 name="sttLau"
                                 className="border border-gray-300 rounded px-3 py-2 w-full"
@@ -78,11 +78,22 @@ const AddLauForm = ({ tenNhaTro, lau, idNhaTro }) => {
                         </div>
                         <button
                             type="submit"
-                            disabled={props.isSubmitting}
-                            className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            disabled={isSubmitting}
+                            className={`bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed ${
+                                isSubmitting ? 'bg-blue-500 animate-pulse' : ''
+                            }`}
                         >
-                            Thêm lầu
+                            {isSubmitting ? 'Đang thêm lầu...' : 'Thêm lầu'}
                         </button>
+                        <button
+                            type="reset"
+                            disabled={isSubmitting}
+                            className={`ml-4 bg-red-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed`}
+                            onClick={() => setSubmitError(null)}
+                        >
+                            Reset
+                        </button>
+                        {submitError && <div className="text-red-500">{submitError}</div>}
                     </Form>
                 )}
             </Formik>

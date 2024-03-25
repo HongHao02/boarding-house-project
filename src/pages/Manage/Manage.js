@@ -3,13 +3,14 @@ import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { IoMdAddCircleOutline } from 'react-icons/io';
 
-import * as chuTroServices from '~/services/chutroServices';
 import BoardingHouseTable from './BoardingHouseTable';
 import { sellectAddresses } from '~/features/addresses/addressesSlice';
 import { getAddressList } from '~/features/addresses/AddressesThunk';
-
+import { getNhaTroList } from '~/features/nhaTroList/nhaTroListThunk';
+import { sellectNhaTroList } from '~/features/nhaTroList/nhaTroSlice';
 import { DialogCustomAnimation } from '~/components/Dialog';
 import AddNhaTroForm from './AddNhaTroForm';
+import images from '~/assets/images';
 function BoardingCard({ nhaTro, onChange = () => {}, isActive }) {
     return (
         <Card className="flex-col justify-between">
@@ -37,37 +38,43 @@ function BoardingCard({ nhaTro, onChange = () => {}, isActive }) {
     );
 }
 function Manage() {
+    //redux
     const dispatch = useDispatch();
     const addresses = useSelector(sellectAddresses);
+    const { nhaTroList } = useSelector(sellectNhaTroList);
     const users = useSelector((state) => state.users);
+
+    //state
     const [isLandlord, setIsLandlord] = useState(false);
-    const [nhaTroList, setNhaTroList] = useState([]);
+    // const [nhaTroList, setNhaTroList] = useState([]);
     const [isActive, setIsActive] = useState(() => {
         return nhaTroList.length === 0 ? {} : nhaTroList[0];
     });
-    const fetchNhaTroList = async () => {
-        const response = await chuTroServices.getListNhaTroByIdChuTro();
-        if (response.data) {
-            setNhaTroList(response.data);
-        }
-    };
+    // const fetchNhaTroList = async () => {
+    //     // const response = await chuTroServices.getListNhaTroByIdChuTro();
+    //     // if (response.data) {
+    //     //     setNhaTroList(response.data);
+    //     // }
+
+    // };
 
     useEffect(() => {
         if (users.user) {
             const isLandlordRole = users.user.user.roles.some((role) => role.nameRole === 'CHUTRO');
             if (isLandlordRole) {
                 setIsLandlord(true);
-                fetchNhaTroList();
+                // fetchNhaTroList();
             }
         } else {
             setIsLandlord(false);
         }
-    }, [users.user]);
+    }, [dispatch, users.user]);
 
     useEffect(() => {
         console.log('ADDRESSES_REDUCER ', addresses);
         // Dispatch thunk để lấy danh sách địa chỉ khi component được render
         dispatch(getAddressList());
+        dispatch(getNhaTroList());
         console.log('ADDRESSES ', addresses.addresses);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
@@ -83,7 +90,7 @@ function Manage() {
         }
     }, [nhaTroList]);
 
-    console.log(nhaTroList);
+    console.log('NHATROLIST ', nhaTroList);
     return (
         <div className="w-full">
             {isLandlord && users.user !== null ? (
@@ -91,13 +98,18 @@ function Manage() {
                     {/**User info */}
                     <div className="flex gap-6">
                         <Avatar
-                            src={users.user.user.avt}
+                            src={users.user.user.avt || images.noAVTMale}
                             className="w-28 h-28"
                             withBorder={true}
                             color="green"
                         ></Avatar>
                         <div className="flex flex-col justify-between">
-                            <p className="font-bold">{`${users.user.user.firstName} ${users.user.user.lastName}`}</p>
+                            {/* {`${users.user.user.firstName} ${users.user.user.lastName}`} */}
+                            <p className="font-bold">
+                                {users.user.user.firstName && users.user.user.lastName
+                                    ? `${users.user.user.firstName} ${users.user.user.lastName}`
+                                    : 'NO_NAME'}
+                            </p>
                             <p>{users.user.user.username}</p>
                             <Button className="flex items-center gap-3 h-5" variant="outlined">
                                 <svg
@@ -142,7 +154,7 @@ function Manage() {
                                 <DialogCustomAnimation
                                     title="Thêm nhà trọ mới"
                                     button={
-                                        <IconButton className="rounded-full">
+                                        <IconButton className="rounded-full bg-green-700">
                                             <IoMdAddCircleOutline className="w-6 h-6" />
                                         </IconButton>
                                     }
@@ -159,7 +171,7 @@ function Manage() {
                                 <DialogCustomAnimation
                                     title="Thêm nhà trọ mới"
                                     button={
-                                        <IconButton className="rounded-full">
+                                        <IconButton className="rounded-full bg-green-700">
                                             <IoMdAddCircleOutline className="w-6 h-6" />
                                         </IconButton>
                                     }

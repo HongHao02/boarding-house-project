@@ -35,6 +35,9 @@ function Post({ post, likedPosts, ...passProps }, ref) {
         return false;
     });
 
+    //disabled when call api for like post
+    const [isFetching, setIsFetching] = useState(false);
+
     useEffect(() => {
         if (likedPosts.length > 0) {
             // Kiểm tra xem post có trong danh sách likedPosts hay không
@@ -91,6 +94,7 @@ function Post({ post, likedPosts, ...passProps }, ref) {
 
     //Set show diaglog when call API like post
     const toggleLike = async (idBaiViet) => {
+        setIsFetching(true);
         setshowLoginDialog(false);
         if (users.user) {
             setShowDiaglog(false);
@@ -112,6 +116,7 @@ function Post({ post, likedPosts, ...passProps }, ref) {
         } else {
             setshowLoginDialog(true);
         }
+        setIsFetching(false);
     };
     /**
      * blur image when load
@@ -272,7 +277,8 @@ function Post({ post, likedPosts, ...passProps }, ref) {
             </div>
             <div className=" bg-blue-gray-100  h-[1px] mx-auto mb-2"></div>
             <div className="flex items-center justify-evenly">
-                <div
+                <button
+                    disabled={isFetching}
                     className="flex justify-center  w-1/4  items-center text-gray-700   hover:border-blue-gray-50 hover:rounded-md hover:bg-blue-gray-50 hover:scale-110 cursor-pointer"
                     onClick={() => toggleLike(post.idBaiViet)}
                 >
@@ -287,7 +293,7 @@ function Post({ post, likedPosts, ...passProps }, ref) {
                             <span className="ml-2">Yêu thích</span>
                         </>
                     )}
-                </div>
+                </button>
                 <div className="flex justify-center  w-1/4 items-center text-gray-700   hover:border-blue-gray-50 hover:rounded-md hover:bg-blue-gray-50 hover:scale-110 cursor-pointer">
                     <FaComment className="w-5 h-5" />
                     <span className="ml-2">Bình luận</span>

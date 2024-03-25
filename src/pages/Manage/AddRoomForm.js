@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { Input, Slider } from '@material-tailwind/react';
+import { useDispatch } from 'react-redux';
+
+import { getNhaTroList } from '~/features/nhaTroList/nhaTroListThunk';
 import * as chuTroServices from '~/services/chutroServices';
 
 const validationSchema = Yup.object().shape({
-    soPhong: Yup.number("Số phòng phải là số")
+    soPhong: Yup.number('Số phòng phải là số')
         .min(1, 'Số phòng phải lớn hơn hoặc bằng 1')
         .max(100, 'Số phòng phải nhỏ hơn 100')
         .positive('Số phòng phải là số nguyên')
@@ -15,9 +18,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const AddRoomForm = ({ tenNhaTro, lau }) => {
+    const dispatch = useDispatch();
     const [reload, setReload] = useState(false);
     const [loaiPhong, setLoaiPhong] = useState([]);
     const [cost, setCost] = useState(50);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState(null);
 
     const handleChange = (e) => {
         setCost(e.target.value);
@@ -32,15 +38,15 @@ const AddRoomForm = ({ tenNhaTro, lau }) => {
     useEffect(() => {
         const fetchLoaiNhaTro = async () => {
             const response = await chuTroServices.getAllLoaiPhong();
-            if (response.data.length > 0) {
+            if (response) {
                 console.log('LOAIPHONG ', response.data);
                 setLoaiPhong(response.data);
+            } else {
+                setLoaiPhong([]);
             }
         };
         fetchLoaiNhaTro();
     }, []);
-
-    
 
     const handleAddPhong = (values) => {
         const data = {
@@ -52,19 +58,24 @@ const AddRoomForm = ({ tenNhaTro, lau }) => {
             giaPhong: cost * 100000,
         };
         const fecthAddRoom = async (data) => {
+            setIsSubmitting(true);
             const response = await chuTroServices.addPhong(data);
             console.log('RESPONSE_ADD_ROOM ', response);
             if (response) {
                 console.log('ADD_ROOM ', response);
                 if (response.data) {
+                    setSubmitError(null);
                     alert(JSON.stringify('Thêm phòng trọ thành công', null, 2));
                     setReload(!reload);
+                    dispatch(getNhaTroList());
                 } else {
-                    alert(JSON.stringify(response.message, null, 2));
+                    setSubmitError(response.message);
+                    // alert(JSON.stringify(response.message, null, 2));
                 }
             } else {
-                alert(JSON.stringify(response, null, 2));
+                setSubmitError(response.error);
             }
+            setIsSubmitting(false);
         };
         fecthAddRoom(data);
     };
@@ -109,7 +120,7 @@ const AddRoomForm = ({ tenNhaTro, lau }) => {
                                 as="select"
                                 className="border border-gray-300 rounded px-3 py-2 w-full"
                             >
-                                {loaiPhong.length > 0 && (
+                                {loaiPhong.length > 0 ? (
                                     <>
                                         {loaiPhong.map((loaiPhong, index) => (
                                             <option key={index} value={loaiPhong.idLoai}>
@@ -117,6 +128,8 @@ const AddRoomForm = ({ tenNhaTro, lau }) => {
                                             </option>
                                         ))}
                                     </>
+                                ) : (
+                                    <option>Lỗi!Không tìm thấy loại phòng nào</option>
                                 )}
                             </Field>
                         </div>
@@ -147,11 +160,22 @@ const AddRoomForm = ({ tenNhaTro, lau }) => {
                         </div>
                         <button
                             type="submit"
-                            disabled={props.isSubmitting}
-                            className="bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed"
+                            disabled={isSubmitting}
+                            className={`bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed ${
+                                isSubmitting ? 'bg-blue-500 animate-pulse' : ''
+                            }`}
                         >
-                            Thêm phòng
+                            {isSubmitting ? 'Đang thêm phòng...' : 'Thêm phòng'}
                         </button>
+                        <button
+                            type="reset"
+                            disabled={isSubmitting}
+                            className={`ml-4 bg-red-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed`}
+                            onClick={() => setSubmitError(null)}
+                        >
+                            Reset
+                        </button>
+                        {submitError && <div className="text-red-500">{submitError}</div>}
                     </Form>
                 )}
             </Formik>

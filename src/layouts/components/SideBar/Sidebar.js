@@ -24,21 +24,22 @@ const menuSidebar = [
     { lable: 'Reservation', icon: <GoBookmark className="w-5 h-5" />, path: config.routes.reservation },
 ];
 
-function Sidebar() {
+function Sidebar({ className = '' }) {
     const [open, setOpen] = useState(true);
     // const [showNav, setShowNav] = useState(true);
 
     const users = useSelector((state) => state.users);
     console.log('USER SIDEBAR ', users);
 
+    console.log("CLASSNAME ", className)
     return (
         <>
             {/* <HiMenu className="sm:block lg:hidden w-5 h-5 " onClick={() => setShowNav(!showNav)} /> */}
 
             <div
-                className={`${
+                className={`${className !== '' ? className : 'fixed'} ${
                     open ? 'w-72' : 'w-24'
-                }  h-screen bg-white p-4 xl:mt-[2px] fixed overflow-y-auto  duration-500 border-1 rounded-md origin-right`}
+                }  h-screen bg-white p-4 xl:mt-[2px] overflow-y-auto  duration-500 border-1 rounded-md origin-right`}
             >
                 <IoChevronBackCircle
                     className={`${

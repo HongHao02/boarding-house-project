@@ -118,14 +118,14 @@ export default function BoardingHouseTable({ nhaTro = {} }) {
                                             <DialogCustomAnimation
                                                 title="Thêm lầu mới"
                                                 button={
-                                                    <IconButton className="rounded-full">
+                                                    <IconButton className="rounded-full bg-green-700">
                                                         <IoMdAddCircleOutline className="w-6 h-6" />
                                                     </IconButton>
                                                 }
                                                 toolTipContent="Thêm lầu"
                                             >
                                                 {/* <AddRoom tenNhaTro={nhaTro.tenNhaTro} lau={isActiveLau}></AddRoom> */}
-                                                <AddLauForm tenNhaTro={nhaTro.tenNhaTro} lau={isActiveLau}></AddLauForm>
+                                                <AddLauForm tenNhaTro={nhaTro.tenNhaTro} idNhaTro={nhaTro.idNhaTro} lau={isActiveLau}></AddLauForm>
                                             </DialogCustomAnimation>
                                         </>
                                     ) : (
@@ -134,7 +134,7 @@ export default function BoardingHouseTable({ nhaTro = {} }) {
                                             <DialogCustomAnimation
                                                 title="Thêm lầu mới"
                                                 button={
-                                                    <IconButton className="rounded-full">
+                                                    <IconButton className="rounded-full bg-green-700">
                                                         <IoMdAddCircleOutline className="w-6 h-6" />
                                                     </IconButton>
                                                 }
@@ -271,7 +271,7 @@ export default function BoardingHouseTable({ nhaTro = {} }) {
                                         <DialogCustomAnimation
                                             title="Thêm phòng mới"
                                             button={
-                                                <IconButton className="rounded-full">
+                                                <IconButton className="rounded-full bg-green-700">
                                                     <IoMdAddCircleOutline className="w-6 h-6" />
                                                 </IconButton>
                                             }
