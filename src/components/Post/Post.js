@@ -294,9 +294,14 @@ function Post({ post, likedPosts, ...passProps }, ref) {
                         </>
                     )}
                 </button>
+
                 <div className="flex justify-center  w-1/4 items-center text-gray-700   hover:border-blue-gray-50 hover:rounded-md hover:bg-blue-gray-50 hover:scale-110 cursor-pointer">
-                    <FaComment className="w-5 h-5" />
-                    <span className="ml-2">Bình luận</span>
+                    <Link to={`/comment/:${post.idBaiViet}`}>
+                        <div className="flex items-center justify-center">
+                            <FaComment className="w-5 h-5" />
+                            <span className="ml-2">Bình luận</span>
+                        </div>
+                    </Link>
                 </div>
                 <div className="  flex justify-center  w-1/4 items-center text-white bg-green-600 rounded-md   hover:border-blue-900 hover:rounded-md hover:scale-110  cursor-pointer">
                     Tư vấn

@@ -9,7 +9,8 @@ const routes = {
     profile: '/:username',
     reservation: '/reservation',
     search: '/search',
-    video: '/video'
+    video: '/video',
+    comment: '/comment/:idBaiViet'
 };
 
 export default routes;

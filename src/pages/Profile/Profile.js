@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
-import { FaCameraRetro } from 'react-icons/fa';
 
 import * as userService from '~/services/userServices';
 
@@ -79,7 +78,7 @@ function Profile() {
                     </div>
                     {/**part 2: content */}
                     <Card className="w-[80%] mx-auto">
-                        <div className='flex gap-x-2'>
+                        <div className="flex gap-x-2">
                             <div className="w-2/5">Info</div>
                             <div className="w-3/5">Post</div>
                         </div>

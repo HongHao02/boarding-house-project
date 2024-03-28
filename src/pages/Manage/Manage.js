@@ -87,6 +87,8 @@ function Manage() {
     useEffect(() => {
         if (nhaTroList.length > 0) {
             setIsActive(nhaTroList[0]);
+        } else {
+            setIsActive({});
         }
     }, [nhaTroList]);
 

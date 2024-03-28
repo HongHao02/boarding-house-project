@@ -9,7 +9,8 @@ import Memory from '~/pages/Memory';
 import Profile from '~/pages/Profile';
 import Reservation from '~/pages/Reservation';
 import Search from '~/pages/Search';
-import Video from '~/pages/Video'
+import Video from '~/pages/Video';
+import Comment from '~/pages/Comment';
 
 //publicRoutes for not log in
 const publicRoutes = [
@@ -19,10 +20,11 @@ const publicRoutes = [
     { path: config.routes.search, component: Search, layout: null },
     { path: config.routes.memory, component: Memory, layout: NoRightSidebar },
     { path: config.routes.profile, component: Profile, layout: HeaderOnly },
-    { path: config.routes.reservation, component: Reservation},
+    { path: config.routes.reservation, component: Reservation },
     { path: config.routes.video, component: Video },
     { path: config.routes.post, component: Post },
     { path: config.routes.manage, component: Manage, layout: NoRightSidebar },
+    { path: config.routes.comment, component: Comment, layout: HeaderOnly },
 ];
 
 //privateRoutes for log in

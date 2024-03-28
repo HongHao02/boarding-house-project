@@ -39,12 +39,15 @@ export const nhaTroSlice = createSlice({
                 // Xử lý sự kiện khi request thành công
                 state.status = 'succeeded';
                 // Add any fetched posts to the array
-                state.nhaTroList = action.payload;
+                if(action.payload){
+                    state.nhaTroList = action.payload;
+                }
             })
             .addCase(getNhaTroList.rejected, (state, action) => {
                 //Xử lý khi request bị từ chối
                 state.status = 'failed';
                 state.error = action.error.message;
+                state.nhaTroList= [];
             });
     },
 });

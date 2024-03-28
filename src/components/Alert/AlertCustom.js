@@ -27,7 +27,7 @@ const AlertCustom = ({ type, message, onClose }) => {
             //     mount: { y: 0 },
             //     unmount: { y: -200 },
             // }}
-            className={`top-0 z-[9999] fixed left-0 w-full h-auto text-white ${
+            className={`top-0 z-[9999] fixed left-0 w-full min-h-[50px] text-white ${
                 type === 'success' ? 'bg-green-400' : 'bg-red-400'
             }  flex justify-center`}
         >
