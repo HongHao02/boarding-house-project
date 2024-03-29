@@ -47,7 +47,7 @@ function Sidebar({ className = '' }) {
                     } hidden lg:block absolute cursor-pointer right-0 top-11 w-7 h-7 `}
                     onClick={() => setOpen(!open)}
                 />
-                <Link to={users.user ? `/:${users.user.user.username}` : config.routes.home}>
+                <Link to={users.user ? `/my-info/:${users.user.user.username}` : config.routes.home}>
                     <div className="flex items-center p-5 gap-x-4">
                         <Avatar
                             variant="rounded"

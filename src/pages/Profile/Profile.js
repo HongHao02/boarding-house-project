@@ -33,7 +33,7 @@ function Profile() {
     }, []);
     return (
         <div className="w-full min-h-screen">
-            {message !== null && <div className="flex justify-center items-center mx-auto"></div>}
+            {message !== null && <div className="flex justify-center items-center mx-auto">{message}</div>}
             {userInfo !== null && (
                 <div>
                     {/**part 1: info */}

@@ -11,6 +11,7 @@ import Reservation from '~/pages/Reservation';
 import Search from '~/pages/Search';
 import Video from '~/pages/Video';
 import Comment from '~/pages/Comment';
+import MyInfo from '~/pages/MyInfo';
 
 //publicRoutes for not log in
 const publicRoutes = [
@@ -25,6 +26,7 @@ const publicRoutes = [
     { path: config.routes.post, component: Post },
     { path: config.routes.manage, component: Manage, layout: NoRightSidebar },
     { path: config.routes.comment, component: Comment, layout: HeaderOnly },
+    { path: config.routes.myInfo, component: MyInfo, layout: HeaderOnly },
 ];
 
 //privateRoutes for log in

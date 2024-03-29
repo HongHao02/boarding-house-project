@@ -33,7 +33,7 @@ export const changeAvt = async (file) => {
         const formData = new FormData();
         formData.append('file', file);
 
-        const response = await httpRequest.postWithFile('/users/avt', formData, {
+        const response = await httpRequest.putWithFile('/users/avt', formData, {
             headers: {
                 'Content-Type': 'multipart/form-data',
             },
@@ -42,7 +42,7 @@ export const changeAvt = async (file) => {
         return response;
     } catch (error) {
         console.log(error);
-        return { error };
+        return null;
     }
 };
 
@@ -63,7 +63,7 @@ export const changeInfo = async ({ firstName, lastName, numberPhone, gender, dat
         formData.append('dateOfBirth', dateOfBirth);
         formData.append('cccd', cccd);
 
-        const response = await httpRequest.postWithFile('/users/avt', formData);
+        const response = await httpRequest.putWithFile('/users/info', formData);
         console.log('CHANGE INFOR RESPONSE', response);
         return response;
     } catch (error) {

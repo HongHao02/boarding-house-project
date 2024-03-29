@@ -68,7 +68,7 @@ const SignUpForm = () => {
                     <Form className="space-y-4">
                         <div>
                             <label htmlFor="username" className="block">
-                                Useranme
+                                Email
                             </label>
                             <Field
                                 type="email"
@@ -132,7 +132,6 @@ const SignUpForm = () => {
                             Reset
                         </button>
                         {submitError && <div className="text-red-500">{submitError}</div>}
-                        {console.log("SIGNUP_PROPS " ,props.values)}
                     </Form>
                 )}
             </Formik>

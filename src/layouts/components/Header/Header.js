@@ -39,13 +39,14 @@ import config from '~/config';
 import * as request from '~/utils/httpRequest';
 import { loginUserSuccess } from '~/features/user/userSlice';
 import SignOut from './SignOut';
-import Search from '~/layouts/components/Search'
+import Search from '~/layouts/components/Search';
 
 // profile menu component
 const profileMenuItems = [
     {
         label: 'My Profile',
         icon: UserCircleIcon,
+        to: '/my-info/:anonymous-user'
     },
     {
         label: 'Edit Profile',
@@ -109,7 +110,7 @@ function ProfileMenu() {
                     Search
                 </Button>
             </div> */}
-            <Search/>
+            <Search />
             <div className="flex justify-end flex-grow-0 ">
                 <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} />
                 <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} />
@@ -126,7 +127,7 @@ function ProfileMenu() {
                         size="sm"
                         alt="tania andrew"
                         className="border border-gray-900 p-0.5"
-                        src={users.user &&  users.user.user.avt ? users.user.user.avt : images.noAVTMale}
+                        src={users.user && users.user.user.avt ? users.user.user.avt : images.noAVTMale}
                     />
                     <ChevronDownIcon
                         strokeWidth={2.5}
@@ -136,7 +137,7 @@ function ProfileMenu() {
             </MenuHandler>
 
             <MenuList className="p-1">
-                {profileMenuItems.map(({ label, icon, onClick, component }, key) => {
+                {profileMenuItems.map(({ label, icon, onClick, component, to }, key) => {
                     const isLastItem = key === profileMenuItems.length - 1;
                     return (
                         <MenuItem
@@ -151,14 +152,15 @@ function ProfileMenu() {
                                 strokeWidth: 2,
                             })}
                             {component || (
-                                <Typography
-                                    variant="small"
-                                    className="font-normal"
-                                    color={isLastItem ? 'red' : 'inherit'}
-                                    onClick={onClick ? onClick : () => {}}
-                                >
-                                    {label}
-                                </Typography>
+                                <Link to={label === 'My Profile' && users.user !== null ? `/my-info/:${users.user.user.username}` : to}>
+                                    <Typography
+                                        variant="small"
+                                        className="font-normal"
+                                        color={isLastItem ? 'red' : 'inherit'}
+                                    >
+                                        {label}
+                                    </Typography>
+                                </Link>
                             )}
                         </MenuItem>
                     );
