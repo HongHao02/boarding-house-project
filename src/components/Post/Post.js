@@ -13,6 +13,8 @@ import PostTimeStamp from '../Time/PostTimeStamp';
 import * as postServices from '../../services/postServices';
 import DialogDefault from '../Dialog/DialogDefault';
 import AlertCustom from '../Alert/AlertCustom';
+import { DialogCustomAnimation } from '../Dialog';
+import Consultant from './components/Consultant';
 
 function Post({ post, likedPosts, ...passProps }, ref) {
     // const dispatch = useDispatch();
@@ -22,6 +24,7 @@ function Post({ post, likedPosts, ...passProps }, ref) {
     const [like, setLike] = useState(post.countLikes);
     const [showDiaglog, setShowDiaglog] = useState(false);
     const [showLoginDialog, setshowLoginDialog] = useState(false);
+    const [showChuTroDialog, setShowChuTroDialog] = useState(false);
     const [active, setActive] = useState(post.fileSet[0].url);
     //likedPost
     const [liked, setLiked] = useState(() => {
@@ -55,9 +58,16 @@ function Post({ post, likedPosts, ...passProps }, ref) {
     const handleCloseAlert = () => {
         setAlert(null);
     };
+    const handleAlert = (data) => {
+        setAlert(data);
+    };
     //
     const handleOnCloseDiaglog = () => {
         setshowLoginDialog(!showLoginDialog);
+        setShowChuTroDialog(!showChuTroDialog);
+    };
+    const handleOnChuTroDiaglog = () => {
+        setShowChuTroDialog(!showChuTroDialog);
     };
     const fallback =
         'https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80';
@@ -118,19 +128,29 @@ function Post({ post, likedPosts, ...passProps }, ref) {
         }
         setIsFetching(false);
     };
-    /**
-     * blur image when load
-     */
-    // const handleLoadImage = () => {
-    //     setLoad(true);
-    // };
-
+    
+    const handleCheckChuTroRole = (user) => {
+        if (user !== null) {
+            if (user.user.authorities.length > 0) {
+                return user.user.authorities.some((auth) => auth.authority === 'ROLE_CHUTRO');
+            }
+        }
+        return false;
+    };
+    const toggleCreateConsultan = () => {
+        setShowChuTroDialog(!showChuTroDialog);
+    };
     return (
         <div ref={ref} className="bg-white shadow-md rounded-lg p-4 mb-4 w-[50%] mx-auto">
             {showDiaglog && setAlert({ type: 'error', message: 'Có lỗi! Không thể thực hiện hành động' })}
             {showLoginDialog && (
                 <DialogDefault type="login" onClose={handleOnCloseDiaglog}>
-                    Bạn chưa đăng nhập, vui lòng đăng nhập trước khi thích bài viết!
+                    Bạn chưa đăng nhập, vui lòng đăng nhập trước khi thích hoặc thực hiện tư vấn!
+                </DialogDefault>
+            )}
+            {showChuTroDialog && (
+                <DialogDefault type="login" onClose={handleOnChuTroDiaglog}>
+                    Bạn phải là KHÁCH THUÊ để được thực hiện tư vấn
                 </DialogDefault>
             )}
             {alert && <AlertCustom type={alert.type} message={alert.message} onClose={handleCloseAlert} />}
@@ -304,7 +324,13 @@ function Post({ post, likedPosts, ...passProps }, ref) {
                     </Link>
                 </div>
                 <div className="  flex justify-center  w-1/4 items-center text-white bg-green-600 rounded-md   hover:border-blue-900 hover:rounded-md hover:scale-110  cursor-pointer">
-                    Tư vấn
+                    {!handleCheckChuTroRole(users.user) ? (
+                        <DialogCustomAnimation title="Tư vấn" button={<p>Tư vấn</p>} type="button">
+                            <Consultant post={post} onDone={handleAlert}></Consultant>
+                        </DialogCustomAnimation>
+                    ) : (
+                        <div onClick={toggleCreateConsultan}>Tư vấn</div>
+                    )}
                 </div>
             </div>
         </div>

@@ -71,3 +71,22 @@ export const changeInfo = async ({ firstName, lastName, numberPhone, gender, dat
         return { error };
     }
 };
+
+export const createConsultant = async ({ idNhaTro, idLau, idPhong, idBaiViet }) => {
+    try {
+        console.log('CREATE CONSULTANT SERVICE ', idNhaTro, idLau, idPhong, idBaiViet);
+
+        const formData = new FormData();
+        formData.append('idNhaTro', idNhaTro);
+        formData.append('idLau', idLau);
+        formData.append('idPhong', idPhong);
+        formData.append('idBaiViet', idBaiViet);
+
+        const response = await httpRequest.postWithFile('/khachthue/tuvan/create', formData);
+        console.log('CREATE CONSULTAN RESPONSE', response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return { error };
+    }
+};

@@ -77,3 +77,17 @@ export const updateTinhTrangPhong = async (idPhong) => {
         return { error };
     }
 };
+
+export const updateViewed = async (idTV) => {
+    try {
+        console.log('UPDATE VIEWED CONSULTANT SERVICE ', idTV);
+        const response = await httpRequest.put(`/chutro/tuvan/viewed/${idTV}`);
+        console.log('UPDATE VIEWED CONSULTAN RESPONSE', response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return { error };
+    }
+};
+
+

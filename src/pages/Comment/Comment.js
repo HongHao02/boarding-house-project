@@ -1,7 +1,8 @@
 /* eslint-disable eqeqeq */
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-
+import { sellectUser } from '~/features/user/userSlice';
+import { useSelector } from 'react-redux';
 import { FaHeart } from 'react-icons/fa';
 import { FaComment } from 'react-icons/fa';
 import { MdOutlineMoreHoriz } from 'react-icons/md';
@@ -9,28 +10,69 @@ import { FaHouse } from 'react-icons/fa6';
 import { IoMapOutline } from 'react-icons/io5';
 import { IoHeartDislike } from 'react-icons/io5';
 import { IoHeartCircleSharp } from 'react-icons/io5';
+import { FiMoreHorizontal } from 'react-icons/fi';
 
 import images from '~/assets/images';
 import CarouselCustomNavigation from '~/components/Carousel';
 import * as postServices from '~/services/postServices';
 import PostTimeStamp from '~/components/Time/PostTimeStamp';
-import { Avatar, Button } from '@material-tailwind/react';
+import { Avatar, Button, Menu, MenuHandler, MenuList, MenuItem } from '@material-tailwind/react';
 import TwitterChatboxTextarea from './TwitterChatboxTextarea';
 import AlertCustom from '~/components/Alert/AlertCustom';
-import { sellectUser } from '~/features/user/userSlice';
-import { useSelector } from 'react-redux';
-const CommentElement = ({ avt, lastName, firstName, noiDung, thoiGianBL }) => {
-    console.log('AVT ', avt);
+import { DialogCustomAnimation } from '~/components/Dialog';
+import DeleteComment from './components/DeleteComment';
+
+const CommentElement = ({ idBL, username, avt, lastName, firstName, noiDung, thoiGianBL, onLoading }) => {
+    const { user } = useSelector((state) => state.users);
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleHidden = () => {
+        onLoading();
+    };
+
     return (
-        <div className="flex gap-2">
-            <Avatar src={avt || images.noAVTMale} className="w-8 h-8" withBorder={true}></Avatar>
-            <div className=" rounded-lg bg-blue-gray-50 mb-2 p-2">
-                <h4 className="font-bold">{`${
-                    firstName === null || lastName === null ? 'NO_NAME' : firstName.concat(lastName)
-                }`}</h4>
-                <p>{noiDung}</p>
-                <PostTimeStamp published_at={thoiGianBL}></PostTimeStamp>
-            </div>
+        <div className="flex gap-2" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+            <>
+                <Avatar src={avt || images.noAVTMale} className="w-8 h-8" withBorder={true}></Avatar>
+                <div className=" rounded-lg bg-blue-gray-50 mb-2 p-2">
+                    <h4 className="font-bold">{`${
+                        firstName === null || lastName === null ? 'NO_NAME' : firstName.concat(lastName)
+                    }`}</h4>
+                    <p>{noiDung}</p>
+                    <PostTimeStamp published_at={thoiGianBL}></PostTimeStamp>
+                </div>
+                {isHovered && (
+                    <div className="relative flex justify-center items-center">
+                        <Menu className="absolute">
+                            <MenuHandler>
+                                <div className="flex justify-center items-center  min-w-10">
+                                    <FiMoreHorizontal className="w-5 h-5 rounded-full bg-gray-200 hover:bg-gray-400"></FiMoreHorizontal>
+                                </div>
+                            </MenuHandler>
+                            <MenuList>
+                                {user !== null && user.user.username === username ? (
+                                    <>
+                                        <MenuItem>Cập nhật</MenuItem>
+
+                                        <DialogCustomAnimation
+                                            title="Xóa bình luận"
+                                            button={<MenuItem>Xóa</MenuItem>}
+                                            type="button"
+                                        >
+                                            <DeleteComment idBL={idBL} onHidden={handleHidden}></DeleteComment>
+                                        </DialogCustomAnimation>
+                                    </>
+                                ) : (
+                                    <>
+                                        <MenuItem>Ẩn</MenuItem>
+                                        <MenuItem>Báo cáo</MenuItem>
+                                    </>
+                                )}
+                            </MenuList>
+                        </Menu>
+                    </div>
+                )}
+            </>
         </div>
     );
 };
@@ -119,6 +161,10 @@ function Comment() {
         setShowAlert(!showAlert);
         setType(null);
         setMessage(null);
+    };
+
+    const handleLoading = () => {
+        setLoading(!loading);
     };
 
     return (
@@ -284,7 +330,7 @@ function Comment() {
                                 {/**Khung chứa bình luận luận */}
                                 <div className="flex flex-col gap-1 h-[175px]">
                                     {post.comments.length > 0 ? (
-                                        post.comments.map(({ user, noiDung, thoiGianBL }, index) => (
+                                        post.comments.map(({ user, idBL, noiDung, thoiGianBL }, index) => (
                                             <CommentElement
                                                 key={index}
                                                 avt={user.avt}
@@ -292,6 +338,9 @@ function Comment() {
                                                 lastName={user.lastName}
                                                 thoiGianBL={thoiGianBL}
                                                 noiDung={noiDung}
+                                                username={user.username}
+                                                idBL={idBL}
+                                                onLoading={handleLoading}
                                             ></CommentElement>
                                         ))
                                     ) : (

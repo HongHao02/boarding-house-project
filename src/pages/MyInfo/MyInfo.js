@@ -12,6 +12,7 @@ import * as userService from '~/services/userServices';
 import ChangeAvt from './user-component/ChangeAvt';
 import { DialogCustomAnimation } from '~/components/Dialog';
 import images from '~/assets/images';
+import Others from './Others';
 const featuresList = [
     {
         label: 'Giới thiệu',
@@ -27,7 +28,7 @@ const featuresList = [
     },
     {
         label: 'Khác',
-        component: <PostFeature></PostFeature>,
+        component: <Others></Others>,
     },
 ];
 
@@ -38,6 +39,7 @@ function MyInfo() {
 
     const [userInfo, setUserInfo] = useState(null);
     const [message, setMessage] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const [activeComponent, setActiveComponent] = useState(featuresList[0].component);
 
@@ -59,10 +61,13 @@ function MyInfo() {
         }
     };
 
+    const handleLoading = () => {
+        setLoading(!loading);
+    };
     useEffect(() => {
         fetchUserInfo();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [users]);
+    }, [users, loading]);
 
     return (
         <div>
@@ -132,7 +137,7 @@ function MyInfo() {
                             </div>
                             {/**part 2: content */}
                             <Card className="w-[80%] mx-auto p-4">
-                                {React.cloneElement(activeComponent, { data: userInfo })}
+                                {React.cloneElement(activeComponent, { data: userInfo, onLoading: handleLoading })}
                             </Card>
                         </div>
                     )}

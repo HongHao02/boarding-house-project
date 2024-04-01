@@ -68,6 +68,18 @@ export const createPost = async (post) => {
         console.log(error);
     }
 };
+export const deletePost = async (idBaiViet) => {
+    try {
+        console.log('POST DELETE SERVICE ', idBaiViet);
+        
+        const response = await httpRequest.put(`/chutro/baiviet/delete/${idBaiViet}`);
+        console.log('DELETE POST RESPONSE', response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return { error };
+    }
+};
 
 export const getBaiVietByIdBaiViet = async (idBaiViet) => {
     try {
@@ -88,6 +100,18 @@ export const createComment = async ({ idBaiViet, noiDung }) => {
 
         const response = await httpRequest.postWithFile('/users/binhluan/create', formData);
         console.log('CREATE COMMENT RESPONSE', response);
+        return response;
+    } catch (error) {
+        console.log(error);
+        return { error };
+    }
+};
+export const deleteComment = async (idBL) => {
+    try {
+        console.log('COMMENT DELETE SERVICE ', idBL);
+        
+        const response = await httpRequest.deleted(`/users/binhluan/delete/${idBL}`);
+        console.log('DELETE COMMENT RESPONSE', response);
         return response;
     } catch (error) {
         console.log(error);
