@@ -33,20 +33,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 
 import LoginForm from '../../../components/LoginForm';
-import NotifyMenu from '../../../components/NotifyMenu';
 import images from '~/assets/images';
 import config from '~/config';
 import * as request from '~/utils/httpRequest';
 import { loginUserSuccess } from '~/features/user/userSlice';
 import SignOut from './SignOut';
 import Search from '~/layouts/components/Search';
-
+import { NotifyConsultant } from '~/components/NotifyMenu';
 // profile menu component
 const profileMenuItems = [
     {
         label: 'My Profile',
         icon: UserCircleIcon,
-        to: '/my-info/:anonymous-user'
+        to: '/my-info/:anonymous-user',
     },
     {
         label: 'Edit Profile',
@@ -111,10 +110,10 @@ function ProfileMenu() {
                 </Button>
             </div> */}
             <Search />
-            <div className="flex justify-end flex-grow-0 ">
-                <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} />
-                <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} />
-                <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} />
+            <div className="flex justify-end flex-grow-0 gap-x-2 mx-4">
+                {users.user && <NotifyConsultant NotifyIcon={<HiBellAlert className="w-6 h-6" />}></NotifyConsultant>}
+                {/* <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} />
+                <NotifyMenu NotifyIcon={<HiBellAlert className="w-6 h-6" />} /> */}
             </div>
             <MenuHandler>
                 <Button
@@ -152,7 +151,13 @@ function ProfileMenu() {
                                 strokeWidth: 2,
                             })}
                             {component || (
-                                <Link to={label === 'My Profile' && users.user !== null ? `/my-info/:${users.user.user.username}` : to}>
+                                <Link
+                                    to={
+                                        label === 'My Profile' && users.user !== null
+                                            ? `/my-info/:${users.user.user.username}`
+                                            : to
+                                    }
+                                >
                                     <Typography
                                         variant="small"
                                         className="font-normal"

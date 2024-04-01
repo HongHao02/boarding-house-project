@@ -64,7 +64,6 @@ function Post({ post, likedPosts, ...passProps }, ref) {
     //
     const handleOnCloseDiaglog = () => {
         setshowLoginDialog(!showLoginDialog);
-        setShowChuTroDialog(!showChuTroDialog);
     };
     const handleOnChuTroDiaglog = () => {
         setShowChuTroDialog(!showChuTroDialog);

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
+import { Typography } from '@material-tailwind/react';
 
 const PostTimeStamp = ({ published_at }) => {
     const [timeDiff, setTimeDiff] = useState('');
@@ -13,20 +14,20 @@ const PostTimeStamp = ({ published_at }) => {
 
             if (duration.asMinutes() < 60) {
                 // Đăng cách đây x phút
-                setTimeDiff(`Đăng cách đây ${Math.round(duration.asMinutes())} phút`);
+                setTimeDiff(`Cách đây ${Math.round(duration.asMinutes())} phút`);
             } else if (duration.asHours() < 24) {
                 // Đăng cách đây x giờ
-                setTimeDiff(`Đăng cách đây ${Math.round(duration.asHours())} giờ`);
+                setTimeDiff(`Cách đây ${Math.round(duration.asHours())} giờ`);
             } else {
                 // Đăng cách đây x ngày
-                setTimeDiff(`Đăng cách đây ${Math.round(duration.asDays())} ngày`);
+                setTimeDiff(`Cách đây ${Math.round(duration.asDays())} ngày`);
             }
         };
 
         calculateTimeDifference();
     }, [published_at]);
 
-    return <div className="text-blue-gray-200 font-thin text-sm flex justify-start">{timeDiff}</div>;
+    return <Typography className="text-blue-gray-200 font-thin text-sm flex justify-start">{timeDiff}</Typography>;
 };
 
 export default PostTimeStamp;

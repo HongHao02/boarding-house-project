@@ -1,4 +1,5 @@
 import { Button } from '@material-tailwind/react';
+import { useState } from 'react';
 import { useCalculateMoney } from '~/hooks';
 
 import * as userServices from '~/services/userServices';
@@ -13,11 +14,13 @@ const GridElement = ({ label, value }) => {
 };
 
 function Consultant({ post = {}, onDone = () => {} }) {
+    const [loading, setLoading] = useState(false);
     console.log('CONSULTANT ', post);
     const { idBaiViet, phong, phongSet, user } = post;
     const giaPhong = useCalculateMoney(phong.giaPhong);
 
     const handleAccept = () => {
+        setLoading(true)
         const data = {
             idNhaTro: phong.idNhaTro,
             idLau: phong.idLau,
@@ -35,6 +38,7 @@ function Consultant({ post = {}, onDone = () => {} }) {
                     onDone({ type: 'fail', message: response.message });
                 }
             }
+            setLoading(false)
         };
         fetchCreateConsultant(data);
     };
@@ -65,7 +69,7 @@ function Consultant({ post = {}, onDone = () => {} }) {
                     <GridElement label={'Chủ trọ'} value={`${user.firstName} ${user.lastName}`}></GridElement>
                     <GridElement label={'Số điện thoại'} value={user.numberPhone}></GridElement>
                     <div className="flex justify-end items-center">
-                        <Button color="green" onClick={handleAccept}>
+                        <Button disabled={loading} color="green" onClick={handleAccept} className={loading && "animate-pulse"}>
                             Xác nhận
                         </Button>
                     </div>
