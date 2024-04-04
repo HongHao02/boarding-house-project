@@ -7,7 +7,8 @@ import axios from 'axios';
 const httpRequest = axios.create({
     // baseURL: process.env.REACT_APP_BASE_URL,
     // baseURL: 'https://tiktok.fullstack.edu.vn/api/',
-    baseURL: 'https://honghaocp-api-boarding-house.azurewebsites.net/api/v1' 
+    // baseURL: 'https://honghaocp-api-boarding-house.azurewebsites.net/api/v1' 
+    baseURL: 'https://haob2012202-boardinghoues-api-v2.azurewebsites.net/api/v1'
 });
 
 export const updateToken = (newToken) => {

@@ -61,23 +61,29 @@ function NotifyConsultant({ NotifyIcon }) {
                 <MenuList className="flex flex-col gap-2">
                     {Object.keys(consultant).length > 0 ? (
                         <>
-                            {consultant.tuVanDTOList.map(({ user, chiTietTuVanSet }, index) => (
-                                <MenuItem key={index} className="flex items-center gap-4 py-2 pl-2 pr-8">
-                                    <Avatar
-                                        variant="circular"
-                                        alt="tania andrew"
-                                        src={user.avt || images.noAVTMale}
-                                    />
-                                    <div className="flex flex-col gap-1">
-                                        <Typography  color="gray" className="font-semibold text-[10px]">
-                                            {user.lastName || user.username} đã gửi cho bạn một tư vấn
-                                        </Typography>
-                                        <div className="flex items-center gap-1 text-sm font-medium text-blue-gray-500">
-                                            <ClockIcon />
-                                            <PostTimeStamp published_at={chiTietTuVanSet[0].thoiGianTuVan}></PostTimeStamp>
-                                        </div>
-                                    </div>
-                                </MenuItem>
+                            {consultant.tuVanDTOList.map(({ user, chiTietTuVanSet, viewed }, index) => (
+                                <>
+                                    {!viewed && (
+                                        <MenuItem key={index} className="flex items-center gap-4 py-2 pl-2 pr-8">
+                                            <Avatar
+                                                variant="circular"
+                                                alt="tania andrew"
+                                                src={user.avt || images.noAVTMale}
+                                            />
+                                            <div className="flex flex-col gap-1">
+                                                <Typography color="gray" className="font-semibold text-[10px]">
+                                                    {user.lastName || user.username} đã gửi cho bạn một tư vấn
+                                                </Typography>
+                                                <div className="flex items-center gap-1 text-sm font-medium text-blue-gray-500">
+                                                    <ClockIcon />
+                                                    <PostTimeStamp
+                                                        published_at={chiTietTuVanSet[0].thoiGianTuVan}
+                                                    ></PostTimeStamp>
+                                                </div>
+                                            </div>
+                                        </MenuItem>
+                                    )}
+                                </>
                             ))}
                         </>
                     ) : (

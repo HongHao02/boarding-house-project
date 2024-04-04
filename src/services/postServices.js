@@ -12,7 +12,7 @@ export const getVideoFollowPage = async (page = 0, size = 20) => {
         return response;
     } catch (error) {
         console.log(error);
-        return error;
+        return {error};
     }
 };
 

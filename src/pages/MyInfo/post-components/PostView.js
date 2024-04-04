@@ -16,7 +16,7 @@ import { DialogCustomAnimation } from '~/components/Dialog';
 import DeletePost from './DeletePost';
 import PostTimeStamp from '~/components/Time/PostTimeStamp';
 
-export default function PostView({ post = {}, onLoading = () => {} }) {
+export default function PostView({ post = {}, onLoading = () => {}, isOwn = true }) {
     const handleSetCost = (cost) => {
         const roomCost = cost;
         const formattedAmount = roomCost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -37,26 +37,28 @@ export default function PostView({ post = {}, onLoading = () => {} }) {
 
                 <div className="to-bg-black-10 absolute inset-0 h-full w-full bg-gradient-to-tr from-transparent via-transparent to-black/60 " />
 
-                <Menu
-                    animate={{
-                        mount: { y: 0 },
-                        unmount: { y: 25 },
-                    }}
-                    placement="right-start"
-                >
-                    <MenuHandler>
-                        <div className="!absolute top-4 right-4 hover:bg-gray-500 hover:rounded-full">
-                            <FiMoreVertical className=" rounded-full w-5 h-5"></FiMoreVertical>
-                        </div>
-                    </MenuHandler>
-                    <MenuList>
-                        <MenuItem>Cập nhật</MenuItem>
-                        <MenuItem>Khóa</MenuItem>
-                        <DialogCustomAnimation title="Xóa bài viết" button={<MenuItem>Xóa</MenuItem>} type="button">
-                            <DeletePost idBaiViet={post.idBaiViet} onLoading={onLoading}></DeletePost>
-                        </DialogCustomAnimation>
-                    </MenuList>
-                </Menu>
+                {isOwn && (
+                    <Menu
+                        animate={{
+                            mount: { y: 0 },
+                            unmount: { y: 25 },
+                        }}
+                        placement="right-start"
+                    >
+                        <MenuHandler>
+                            <div className="!absolute top-4 right-4 hover:bg-gray-500 hover:rounded-full">
+                                <FiMoreVertical className=" rounded-full w-5 h-5"></FiMoreVertical>
+                            </div>
+                        </MenuHandler>
+                        <MenuList>
+                            <MenuItem>Cập nhật</MenuItem>
+                            <MenuItem>Khóa</MenuItem>
+                            <DialogCustomAnimation title="Xóa bài viết" button={<MenuItem>Xóa</MenuItem>} type="button">
+                                <DeletePost idBaiViet={post.idBaiViet} onLoading={onLoading}></DeletePost>
+                            </DialogCustomAnimation>
+                        </MenuList>
+                    </Menu>
+                )}
             </CardHeader>
             <Link to={`/comment/:${post.idBaiViet}`}>
                 <CardBody>

@@ -1,15 +1,49 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { Avatar, Button, Card, Typography } from '@material-tailwind/react';
+import React, { useState, useEffect } from 'react';
+import { Button, Avatar, Card, Typography } from '@material-tailwind/react';
+import { FaCameraRetro } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
+
+import PostFeature from './PostFeature';
+import NhaTroFeature from './NhaTroFeature';
+import IntroFeature from './IntroFeature';
 
 import * as userService from '~/services/userServices';
+import ChangeAvt from './user-component/ChangeAvt';
+import { DialogCustomAnimation } from '~/components/Dialog';
+import images from '~/assets/images';
+import Others from './Others';
+const featuresList = [
+    {
+        label: 'Giới thiệu',
+        component: <IntroFeature></IntroFeature>,
+    },
+    {
+        label: 'Bài Viết',
+        component: <PostFeature></PostFeature>,
+    },
+    {
+        label: 'Nhà trọ',
+        component: <NhaTroFeature></NhaTroFeature>,
+    },
+    {
+        label: 'Khác',
+        component: <Others></Others>,
+    },
+];
 
 function Profile() {
+    const users = useSelector((state) => state.users);
     const { username } = useParams();
     const formatUsername = `@${username.substring(1)}`;
 
     const [userInfo, setUserInfo] = useState(null);
     const [message, setMessage] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    const [activeComponent, setActiveComponent] = useState(featuresList[0].component);
+
+    console.log('USER_INFO ', activeComponent);
     const fetchUserInfo = async () => {
         try {
             const response = await userService.getUserInfo({ username: formatUsername });
@@ -27,63 +61,72 @@ function Profile() {
         }
     };
 
+    const handleLoading = () => {
+        setLoading(!loading);
+    };
     useEffect(() => {
         fetchUserInfo();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [users, loading]);
+
     return (
-        <div className="w-full min-h-screen">
-            {message !== null && <div className="flex justify-center items-center mx-auto">{message}</div>}
-            {userInfo !== null && (
-                <div>
-                    {/**part 1: info */}
-                    <div className="bg-gray-50">
-                        <div className="w-[80%] mx-auto">
-                            <div>
-                                <figure className="relative h-96 w-full">
-                                    <img
-                                        className="h-full w-full rounded-xl object-cover object-center"
-                                        src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
-                                        alt="nature"
-                                    />
-                                    <figcaption className="absolute left-2/4 flex  w-[calc(100%-4rem)] -translate-x-2/4 bottom-[-80px]   rounded-full">
-                                        <Avatar
-                                            src={userInfo.user.avt}
-                                            alt="avatar"
-                                            withBorder={true}
-                                            className="p-0.5 w-40 h-40 mr-5"
-                                        />
-                                        <div className="flex flex-grow items-end mb-6">
-                                            <Typography
-                                                variant="h3"
-                                                className="flex-col justify-end"
-                                            >{`${userInfo.user.firstName} ${userInfo.user.lastName}`}</Typography>
-                                            {/* <Button className="flex justify-end items-center ml-auto gap-4" variant="outlined">
-                                                    <FaCameraRetro />
-                                                    Chỉnh sửa ảnh đại diện
-                                                </Button> */}
-                                        </div>
-                                    </figcaption>
-                                </figure>
+        <div>
+            {formatUsername !== '@anonymous-user' ? (
+                <div className="w-full min-h-screen mb-4">
+                    {message !== null && <div className="flex justify-center items-center mx-auto">{message}</div>}
+                    {userInfo !== null && users.user !== null && (
+                        <div>
+                            {/**part 1: info */}
+                            <div className="bg-gray-50">
+                                <div className="w-[80%] mx-auto">
+                                    <div>
+                                        <figure className="relative h-96 w-full">
+                                            <img
+                                                className="h-full w-full rounded-xl object-cover object-center"
+                                                src="https://images.unsplash.com/photo-1682407186023-12c70a4a35e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2832&q=80"
+                                                alt="nature"
+                                            />
+                                            <figcaption className="absolute left-2/4 flex  w-[calc(100%-4rem)] -translate-x-2/4 bottom-[-80px]   rounded-full">
+                                                <Avatar
+                                                    src={users.user.user.avt || images.noAVTMale}
+                                                    alt="avatar"
+                                                    withBorder={true}
+                                                    className="p-0.5 w-40 h-40 mr-5"
+                                                />
+                                                <div className="flex flex-grow items-end mb-6">
+                                                    <Typography
+                                                        variant="h3"
+                                                        className="flex-col justify-end"
+                                                    >{`${userInfo.user.firstName} ${userInfo.user.lastName}`}</Typography>
+                                                </div>
+                                            </figcaption>
+                                        </figure>
+                                    </div>
+                                    <div className="w-full h-[1px] bg-gray-800 mt-24 mb-4"></div>
+                                    <div className="flex gap-x-4 mb-2">
+                                        {featuresList.map(({ label, component }, index) => (
+                                            <Button
+                                                key={index}
+                                                variant={component === activeComponent ? 'gradient' : 'text'}
+                                                color={component === activeComponent ? 'blue' : 'black'}
+                                                onClick={() => setActiveComponent(component)}
+                                                className={component === activeComponent ? 'border-b-indigo-600' : ''}
+                                            >
+                                                <p>{label}</p>
+                                            </Button>
+                                        ))}
+                                    </div>
+                                </div>
                             </div>
-                            <div className="w-full h-[1px] bg-gray-800 mt-24 mb-4"></div>
-                            <div className="flex gap-x-4 mb-2">
-                                <Button variant="text" className="hover:decoration-clone">
-                                    Bài viết
-                                </Button>
-                                <Button variant="text">Giới thiệu</Button>
-                                <Button variant="text">Khác</Button>
-                            </div>
+                            {/**part 2: content */}
+                            <Card className="w-[80%] mx-auto p-4">
+                                {React.cloneElement(activeComponent, { data: userInfo, onLoading: handleLoading })}
+                            </Card>
                         </div>
-                    </div>
-                    {/**part 2: content */}
-                    <Card className="w-[80%] mx-auto">
-                        <div className="flex gap-x-2">
-                            <div className="w-2/5">Info</div>
-                            <div className="w-3/5">Post</div>
-                        </div>
-                    </Card>
+                    )}
                 </div>
+            ) : (
+                <div>anonymous user</div>
             )}
         </div>
     );

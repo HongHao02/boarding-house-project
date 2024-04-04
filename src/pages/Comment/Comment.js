@@ -36,7 +36,7 @@ const CommentElement = ({ idBL, username, avt, lastName, firstName, noiDung, tho
                 <Avatar src={avt || images.noAVTMale} className="w-8 h-8" withBorder={true}></Avatar>
                 <div className=" rounded-lg bg-blue-gray-50 mb-2 p-2">
                     <h4 className="font-bold">{`${
-                        firstName === null || lastName === null ? 'NO_NAME' : firstName.concat(lastName)
+                        firstName === null || lastName === null ? 'NO_NAME' : firstName.concat(" ").concat(lastName)
                     }`}</h4>
                     <p>{noiDung}</p>
                     <PostTimeStamp published_at={thoiGianBL}></PostTimeStamp>
