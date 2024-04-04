@@ -5,11 +5,8 @@ import { MdDateRange } from 'react-icons/md';
 import { FaTransgenderAlt } from 'react-icons/fa';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { PiIdentificationCardFill } from 'react-icons/pi';
-import { Button } from '@material-tailwind/react';
 
 import UserInfoElement from './UserInfoElement';
-import UpdateInfoForm from './UpdateInfoForm';
-import { DialogCustomAnimation } from '~/components/Dialog';
 
 function Overview({ data }) {
     const { user } = useSelector((state) => state.users);

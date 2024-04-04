@@ -1,7 +1,6 @@
 import { useParams } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import { Button, Avatar, Card, Typography } from '@material-tailwind/react';
-import { FaCameraRetro } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 import PostFeature from './PostFeature';
@@ -9,8 +8,6 @@ import NhaTroFeature from './NhaTroFeature';
 import IntroFeature from './IntroFeature';
 
 import * as userService from '~/services/userServices';
-import ChangeAvt from './user-component/ChangeAvt';
-import { DialogCustomAnimation } from '~/components/Dialog';
 import images from '~/assets/images';
 import Others from './Others';
 const featuresList = [
