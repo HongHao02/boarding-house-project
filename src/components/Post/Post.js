@@ -127,7 +127,7 @@ function Post({ post, likedPosts, ...passProps }, ref) {
         }
         setIsFetching(false);
     };
-    
+
     const handleCheckChuTroRole = (user) => {
         if (user !== null) {
             if (user.user.authorities.length > 0) {
@@ -154,28 +154,31 @@ function Post({ post, likedPosts, ...passProps }, ref) {
             )}
             {alert && <AlertCustom type={alert.type} message={alert.message} onClose={handleCloseAlert} />}
             {/* Phần 1: Ảnh và thông tin người đăng */}
-            <Link to={`/:${post.user.username}`}>
-                <div className="flex items-center mb-4">
-                    <img
-                        src={post.user.avt || fallback}
-                        alt={post.user.lastName}
-                        className="w-10 h-10 rounded-full mr-2"
-                    />
-                    <div className="">
-                        <p className="flex justify-start font-bold">
-                            {post.user.firstName && post.user.lastName
-                                ? `${post.user.firstName} ${post.user.lastName}`
-                                : post.user.username}
-                        </p>
-                        <PostTimeStamp published_at={post.published_at} />
+
+            <div className="flex items-center mb-4">
+                <Link to={`/:${post.user.username}`}>
+                    <div className='flex'>
+                        <img
+                            src={post.user.avt || fallback}
+                            alt={post.user.lastName}
+                            className="w-10 h-10 rounded-full mr-2"
+                        />
+                        <div className="">
+                            <p className="flex justify-start font-bold">
+                                {post.user.firstName && post.user.lastName
+                                    ? `${post.user.firstName} ${post.user.lastName}`
+                                    : post.user.username}
+                            </p>
+                            <PostTimeStamp published_at={post.published_at} />
+                        </div>
                     </div>
-                    <div className="ml-auto">
-                        <button>
-                            <MdOutlineMoreHoriz className="w-5 h-5 ml-auto" />
-                        </button>
-                    </div>
+                </Link>
+                <div className="ml-auto">
+                    <button>
+                        <MdOutlineMoreHoriz className="w-5 h-5 ml-auto" />
+                    </button>
                 </div>
-            </Link>
+            </div>
             <div className="flex justify-start mb-2 text-justify">
                 {expand ? (
                     <div>

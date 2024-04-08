@@ -10,7 +10,7 @@ import { getNhaTroList } from '~/features/nhaTroList/nhaTroListThunk';
 const validationSchema = Yup.object().shape({
     tenNhaTro: Yup.string('Vui lòng nhập tên nhà trọ')
         .notOneOf([''], 'Tên không được để trống')
-        .required('Tên nhà trọ bắt là bắc buộc'),
+        .required('Tên nhà trọ là bắt buộc'),
     tenTinh: Yup.string('Vui lòng chọn tỉnh').notOneOf([''], 'Tên không được để trống').required('tỉnh là bắt buộc'),
     tenHuyen: Yup.string('Vui lòng chọn huyện').notOneOf([''], 'Tên không được để trống').required('huyện là bắt buộc'),
     tenXa: Yup.string('Vui lòng chọn xã').notOneOf([''], 'Tên không được để trống').required('xã là bắt buộc'),

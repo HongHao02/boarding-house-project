@@ -193,7 +193,7 @@ const UpdateInfoForm = () => {
                                 isSubmitting ? 'bg-blue-500 animate-pulse' : ''
                             }`}
                         >
-                            {isSubmitting ? '...Waiting' : 'Đăng ký'}
+                            {isSubmitting ? '...Waiting' : 'Cập nhật'}
                         </button>
                         <button
                             type="reset"

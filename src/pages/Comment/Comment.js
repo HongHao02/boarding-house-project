@@ -21,6 +21,7 @@ import TwitterChatboxTextarea from './TwitterChatboxTextarea';
 import AlertCustom from '~/components/Alert/AlertCustom';
 import { DialogCustomAnimation } from '~/components/Dialog';
 import DeleteComment from './components/DeleteComment';
+import CardPlacehoderSkeleton from '~/components/Skeleton/CardPlacehoderSkeleton';
 
 const CommentElement = ({ idBL, username, avt, lastName, firstName, noiDung, thoiGianBL, onLoading }) => {
     const { user } = useSelector((state) => state.users);
@@ -36,7 +37,7 @@ const CommentElement = ({ idBL, username, avt, lastName, firstName, noiDung, tho
                 <Avatar src={avt || images.noAVTMale} className="w-8 h-8" withBorder={true}></Avatar>
                 <div className=" rounded-lg bg-blue-gray-50 mb-2 p-2">
                     <h4 className="font-bold">{`${
-                        firstName === null || lastName === null ? 'NO_NAME' : firstName.concat(" ").concat(lastName)
+                        firstName === null || lastName === null ? 'NO_NAME' : firstName.concat(' ').concat(lastName)
                     }`}</h4>
                     <p>{noiDung}</p>
                     <PostTimeStamp published_at={thoiGianBL}></PostTimeStamp>
@@ -176,16 +177,16 @@ function Comment() {
                     onClose={handleClose}
                 ></AlertCustom>
             )}
-            <div className="bg-white fixed h-full w-full">
+            <div className="bg-white w-full h-full md:fixed">
                 {post.baiViet !== null ? (
-                    <div className="grid grid-cols-4 gap-4">
-                        <div className="grid col-span-3">
-                            <div className="px-40 bg-black relative w-full min-h-[660px]">
+                    <div className="grid md:grid-cols-4 sm:grid-flow-row gap-4 h-full">
+                        <div className="grid md:col-span-3">
+                            <div className="sm:px-2 md:px-40 bg-black w-full h-[660px]">
                                 <CarouselCustomNavigation fileSet={post.baiViet.fileSet} />
                             </div>
                         </div>
-                        <div className="">
-                            <div className="overflow-auto p-2">
+                        <div className="h-[660px]">
+                            <div className="overflow-auto p-2 h-[580px]">
                                 <div className="flex items-center mb-4">
                                     <Link to={`/:${post.baiViet.user.username}`}>
                                         <img
@@ -358,7 +359,9 @@ function Comment() {
                         </div>
                     </div>
                 ) : (
-                    <div className="flex justify-center items-center h-full ">Không thể tải bài viết</div>
+                    <div className="flex justify-center items-center h-full w-full ">
+                        <CardPlacehoderSkeleton></CardPlacehoderSkeleton>
+                    </div>
                 )}
             </div>
         </>

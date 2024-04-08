@@ -41,6 +41,7 @@ function Profile() {
     const [activeComponent, setActiveComponent] = useState(featuresList[0].component);
 
     console.log('USER_INFO ', activeComponent);
+    console.log("PROFILE ", userInfo)
     const fetchUserInfo = async () => {
         try {
             const response = await userService.getUserInfo({ username: formatUsername });
@@ -71,7 +72,7 @@ function Profile() {
             {formatUsername !== '@anonymous-user' ? (
                 <div className="w-full min-h-screen mb-4">
                     {message !== null && <div className="flex justify-center items-center mx-auto">{message}</div>}
-                    {userInfo !== null && users.user !== null && (
+                    {userInfo !== null  && (
                         <div>
                             {/**part 1: info */}
                             <div className="bg-gray-50">
@@ -85,7 +86,7 @@ function Profile() {
                                             />
                                             <figcaption className="absolute left-2/4 flex  w-[calc(100%-4rem)] -translate-x-2/4 bottom-[-80px]   rounded-full">
                                                 <Avatar
-                                                    src={users.user.user.avt || images.noAVTMale}
+                                                    src={userInfo.user.avt || images.noAVTMale}
                                                     alt="avatar"
                                                     withBorder={true}
                                                     className="p-0.5 w-40 h-40 mr-5"

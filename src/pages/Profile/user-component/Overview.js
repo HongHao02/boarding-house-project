@@ -1,5 +1,4 @@
 /* eslint-disable eqeqeq */
-import { useSelector } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
 import { MdDateRange } from 'react-icons/md';
 import { FaTransgenderAlt } from 'react-icons/fa';
@@ -9,38 +8,38 @@ import { PiIdentificationCardFill } from 'react-icons/pi';
 import UserInfoElement from './UserInfoElement';
 
 function Overview({ data }) {
-    const { user } = useSelector((state) => state.users);
+    console.log("OVERVIEW_PROFILE", data);
     return (
         <div className="flex flex-col gap-4 w-full">
-            {user && (
+            {data!= null && Object.keys(data.user).length > 0 && (
                 <>
                     <p className="font-bold">Tổng quan</p>
                     <div className="flex flex-col gap-2">
-                        {user.user !== null ? (
+                        {Object.keys(data.user).length > 0 ? (
                             <>
                                 <UserInfoElement icon={<FaUserCircle></FaUserCircle>}>
-                                    Username: {user.user.username}
+                                    Username: {data.user.username}
                                 </UserInfoElement>
                                 <UserInfoElement icon={<FaUserCircle></FaUserCircle>}>
-                                    LastName: {user.user.firstName}
+                                    LastName: {data.user.firstName}
                                 </UserInfoElement>
                                 <UserInfoElement icon={<FaUserCircle></FaUserCircle>}>
-                                    FirstName: {user.user.lastName}
+                                    FirstName: {data.user.lastName}
                                 </UserInfoElement>
                                 <UserInfoElement icon={<FaPhoneAlt></FaPhoneAlt>}>
-                                    NumberPhne: {user.user.numberPhone}
+                                    NumberPhone: {data.user.numberPhone}
                                 </UserInfoElement>
                                 <UserInfoElement icon={<FaTransgenderAlt></FaTransgenderAlt>}>
-                                    Gender: {user.user.gender ? 'Male' : 'Female'}
+                                    Gender: {data.user.gender ? 'Male' : 'Female'}
                                 </UserInfoElement>
                                 <UserInfoElement icon={<MdDateRange></MdDateRange>}>
                                     Ngày sinh:{' '}
-                                    {user.user.dateOfBirth !== null
-                                        ? user.user.dateOfBirth.slice(0, user.user.dateOfBirth.indexOf('T'))
+                                    {data.user.dateOfBirth !== null
+                                        ? data.user.dateOfBirth.slice(0, data.user.dateOfBirth.indexOf('T'))
                                         : ''}
                                 </UserInfoElement>
                                 <UserInfoElement icon={<PiIdentificationCardFill></PiIdentificationCardFill>}>
-                                    Căn cước công dân: {user.user.cccd}
+                                    Căn cước công dân: {data.user.cccd}
                                 </UserInfoElement>
                             </>
                         ) : (

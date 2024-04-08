@@ -225,7 +225,7 @@ function Manage() {
                                 </div>
                             </>
                         ) : (
-                            <div>Loi khong the tim thay nha tro</div>
+                            <div>Lỗi! Không thể tìm thấy nhà trọ.</div>
                         )}
                     </div>
                     <div>
