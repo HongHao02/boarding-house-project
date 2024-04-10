@@ -117,7 +117,8 @@ function PostCreatePattern({ onChange }) {
             postData.description.length > 0 &&
             postData.idNhaTro !== '' &&
             postData.idLau !== '' &&
-            postData.idPhong !== ''
+            postData.idPhong !== '' &&
+            postData.files.length > 0
         ) {
             setAccept(false);
         } else {

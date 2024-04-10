@@ -109,7 +109,7 @@ function Home() {
                 }
             })}
             {loading && <CardPlacehoderSkeleton />}
-            {message && <div className="text-lg text-gray-600">{message}</div>}
+            {message && <div className="text-lg text-white">{message}</div>}
         </div>
     );
 }
