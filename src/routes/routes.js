@@ -18,7 +18,7 @@ const publicRoutes = [
     { path: config.routes.home, component: Home },
     { path: config.routes.createpost, component: CreatePost, layout: HeaderOnly },
     { path: config.routes.event, component: Event, layout: HeaderOnly },
-    { path: config.routes.search, component: Search, layout: null },
+    { path: config.routes.search, component: Search, layout: NoRightSidebar },
     { path: config.routes.memory, component: Memory, layout: NoRightSidebar },
     { path: config.routes.profile, component: Profile, layout: HeaderOnly },
     { path: config.routes.reservation, component: Reservation },
@@ -29,13 +29,12 @@ const publicRoutes = [
     { path: config.routes.myInfo, component: MyInfo, layout: HeaderOnly },
 ];
 
-//privateRoutes for log in
 const privateRoutes = [
     { path: config.routes.home, component: Home },
     { path: config.routes.post, component: Post },
     { path: config.routes.createpost, component: CreatePost, layout: HeaderOnly },
     { path: config.routes.event, component: Event, layout: HeaderOnly },
-    { path: config.routes.search, component: Search },
+    { path: config.routes.search, component: Search ,layout: NoRightSidebar},
     { path: config.routes.manage, component: Manage, layout: NoRightSidebar },
     { path: config.routes.memory, component: Memory, layout: NoRightSidebar },
     { path: config.routes.profile, component: Profile, layout: HeaderOnly },
