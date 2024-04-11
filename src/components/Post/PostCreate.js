@@ -20,6 +20,7 @@ export default function PostCreate({ className, nhaTroList }) {
         console.log('prevPost ', prevPost);
         setPostData((prev) => ({ ...prev, ...prevPost }));
     };
+    
     const data = [
         {
             label: 'Tạo bài viết',

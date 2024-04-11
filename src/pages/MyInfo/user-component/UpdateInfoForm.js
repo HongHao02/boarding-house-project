@@ -7,10 +7,10 @@ import { useDispatch } from 'react-redux';
 import { loginUserSuccess } from '~/features/user/userSlice';
 import * as userServices from '~/services/userServices';
 const validationSchema = Yup.object().shape({
-    firstName: Yup.string().max(20, 'Tên tối đa 20 ký tự').required('Tên là bắt buộc'),
-    lastName: Yup.string().max(30, 'Họ tối đa 30 ký tự').required('Họ là bắt buộc'),
+    firstName: Yup.string().max(20, 'Họ tối đa 30 ký tự').required("Họ là bắt buộc"),
+    lastName: Yup.string().max(30, 'Tên tối đa 20 ký tự').required("Tên là bắt buộc"),
     numberPhone: Yup.string()
-        .matches(/^[0-9]{10}$/, 'Số điện thoại không hợp lệ') // Kiểm tra xem giá trị có đúng định dạng số điện thoại không
+        .matches(/^[0-9]{10}$/, 'Số điện thoại phải có 10 số') // Kiểm tra xem giá trị có đúng định dạng số điện thoại không
         .required('Số điện thoại là bắt buộc'),
     gender: Yup.string().required('Vui lòng chọn một lựa chọn một trong 2 giới tính'),
     dateOfBirth: Yup.date()

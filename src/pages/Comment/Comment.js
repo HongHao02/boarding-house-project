@@ -1,7 +1,6 @@
 /* eslint-disable eqeqeq */
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { sellectUser } from '~/features/user/userSlice';
 import { useSelector } from 'react-redux';
 import { FaHeart } from 'react-icons/fa';
 import { FaComment } from 'react-icons/fa';
@@ -22,6 +21,9 @@ import AlertCustom from '~/components/Alert/AlertCustom';
 import { DialogCustomAnimation } from '~/components/Dialog';
 import DeleteComment from './components/DeleteComment';
 import CardPlacehoderSkeleton from '~/components/Skeleton/CardPlacehoderSkeleton';
+import useCheckChuTroRole from '~/hooks/useCheckChuTroRole';
+import DialogDefault from '~/components/Dialog/DialogDefault';
+import Consultant from '~/components/Post/components/Consultant';
 
 const CommentElement = ({ idBL, username, avt, lastName, firstName, noiDung, thoiGianBL, onLoading }) => {
     const { user } = useSelector((state) => state.users);
@@ -81,8 +83,10 @@ const CommentElement = ({ idBL, username, avt, lastName, firstName, noiDung, tho
 function Comment() {
     const { idBaiViet } = useParams();
     const idBaiVietFormat = idBaiViet.substring(1);
+    const [showChuTroDialog, setShowChuTroDialog] = useState(false);
 
-    const { user } = useSelector(sellectUser);
+    const { user } = useSelector((state) => state.users);
+    const isChuTro = useCheckChuTroRole(user);
     const [post, setPost] = useState({
         baiViet: null,
         comments: [],
@@ -167,6 +171,18 @@ function Comment() {
     const handleLoading = () => {
         setLoading(!loading);
     };
+    const handleOnChuTroDiaglog = () => {
+        setShowChuTroDialog(!showChuTroDialog);
+    };
+
+    const handleAlert = (data) => {
+        setShowAlert(!showAlert);
+        setMessage(data.message);
+        setType(data.type === 'success' ? 'ok' : 'fail');
+    };
+    const toggleCreateConsultan = () => {
+        setShowChuTroDialog(!showChuTroDialog);
+    };
 
     return (
         <>
@@ -176,6 +192,11 @@ function Comment() {
                     type={type === 'ok' ? 'success' : 'failed'}
                     onClose={handleClose}
                 ></AlertCustom>
+            )}
+            {showChuTroDialog && (
+                <DialogDefault type="login" onClose={handleOnChuTroDiaglog}>
+                    Bạn phải là KHÁCH THUÊ để được thực hiện tư vấn
+                </DialogDefault>
             )}
             <div className="bg-white w-full h-full md:fixed">
                 {post.baiViet !== null ? (
@@ -318,7 +339,13 @@ function Comment() {
                                         </div>
                                     </div>
                                     <div className="  flex justify-center  w-1/4 items-center text-white bg-green-600 rounded-md   hover:border-blue-900 hover:rounded-md hover:scale-110  cursor-pointer">
-                                        Tư vấn
+                                        {!isChuTro ? (
+                                            <DialogCustomAnimation title="Tư vấn" button={<p>Tư vấn</p>} type="button">
+                                                <Consultant post={post.baiViet} onDone={handleAlert}></Consultant>
+                                            </DialogCustomAnimation>
+                                        ) : (
+                                            <div onClick={toggleCreateConsultan}>Tư vấn</div>
+                                        )}
                                     </div>
                                 </div>
                                 <hr className="bg-gray-600 h-[2px] mt-2"></hr>

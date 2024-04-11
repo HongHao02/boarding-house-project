@@ -11,11 +11,11 @@ function ChangeAvt() {
     const users = useSelector((state) => state.users);
     const dispatch = useDispatch();
     const [url, setUrl] = useState(users.user.user.avt);
+    const [message, setMessage] = useState(null);
 
     const fetchUserInfo = async () => {
         try {
             const response = await userServices.getUserInfo({ username: `@${users.user.user.username}` });
-            console.log('USER INFO ', response);
             if (response) {
                 if (response.data) {
                     console.log('RESPONSE ', response.data);
@@ -54,12 +54,22 @@ function ChangeAvt() {
     };
 
     useEffect(() => {
+        const validTypes = ['image/jpeg', 'image/png', 'image/jpg']; // Các loại file ảnh bạn muốn chấp nhận
+
         if (file) {
+            console.log('FILE CHANGE ', file.type);
             if (file.size === 0 || file.size > MAX_SIZE) {
                 setUrl(users.user.user.avt);
             } else {
-                const url = URL.createObjectURL(file);
-                setUrl(url);
+                if (!validTypes.includes(file.type)) {
+                    setMessage(
+                        'Định dạng file không hợp lệ. Vui lòng chọn file có định dạng image.jpg, image/png, image.jpeg',
+                    );
+                } else {
+                    setMessage(null);
+                    const url = URL.createObjectURL(file);
+                    setUrl(url);
+                }
             }
         }
 
@@ -79,11 +89,12 @@ function ChangeAvt() {
             <input
                 // value={postData.files}
                 type="file"
-                accept="image/jpeg, image/png"
+                accept="image/jpeg, image/png, iamge/jpeg"
                 onChange={(e) => setFile(e.target.files[0])}
             />
+            {message && <div className="text-sm text-red-800">{message}</div>}
             <div className="flex justify-end">
-                <Button className="w-32" onClick={handleUpdateAvt}>
+                <Button className="w-32" onClick={handleUpdateAvt} disabled={file == null || message != null}>
                     Cập nhật
                 </Button>
             </div>
