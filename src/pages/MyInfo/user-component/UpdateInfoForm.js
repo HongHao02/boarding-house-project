@@ -166,7 +166,7 @@ const UpdateInfoForm = () => {
                             <ErrorMessage name="gender" component="div" className="text-red-500" />
                         </div>
                         <div>
-                            <label htmlFor="dateOfBirth">Ngày:</label>
+                            <label htmlFor="dateOfBirth">Ngày sinh:</label>
                             <Field
                                 type="text"
                                 id="dateOfBirth"

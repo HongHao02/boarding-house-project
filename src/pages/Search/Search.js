@@ -2,14 +2,13 @@ import { Avatar, IconButton, Typography, Chip } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import IconFilter from './iconFillter';
+
+import { IconFilter } from '~/components/Icons';
 import AddFormAddress from './AddFormAddress';
 import { MdOutlineHouse } from 'react-icons/md';
-
 import { sellectAddresses } from '~/features/addresses/addressesSlice';
 import { getAddressList } from '~/features/addresses/AddressesThunk';
 import { getNhaTroList } from '~/features/nhaTroList/nhaTroListThunk';
-
 import { DialogCustomAnimation } from '~/components/Dialog';
 import images from '~/assets/images';
 
@@ -61,6 +60,7 @@ function Search() {
         dispatch(getAddressList());
         dispatch(getNhaTroList());
         console.log('ADDRESSES ', addresses.addresses);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
     return (
         <div className="h-full w-full">
