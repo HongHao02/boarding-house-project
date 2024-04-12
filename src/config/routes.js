@@ -1,6 +1,6 @@
 //to avoid hashcode
 const routes = {
-    home: '/',
+    home: '/boarding-house-project/',
     event: '/event',
     manage: '/manage',
     memory: '/memory',
