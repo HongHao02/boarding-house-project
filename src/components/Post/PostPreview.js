@@ -21,6 +21,9 @@ function PostPreview({ post, ...passProps }) {
 
     useEffect(() => {
         setPostData((prev) => ({ ...prev, ...post }));
+        if(post?.files.length > 0){
+            setActive(URL.createObjectURL(post.files[0]))
+        }
     }, [post]);
 
     //
