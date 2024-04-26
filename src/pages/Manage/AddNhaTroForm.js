@@ -60,7 +60,7 @@ const AddNhaTroForm = () => {
     };
 
     const findHuyenBySeclectedTinh = (tenTinh) => {
-        if (addresses.length > 0) {
+        if ((addresses?.length ?? 0) > 0) {
             const selectTinh = addresses.find((tinh) => tinh.tenTinh === tenTinh);
             if (selectTinh) {
                 return selectTinh.huyenSet;
@@ -69,7 +69,7 @@ const AddNhaTroForm = () => {
         return null;
     };
     const findXaBySelectedHuyen = (tenTinh, tenHuyen) => {
-        if (addresses.length > 0) {
+        if ((addresses?.length ?? 0) > 0) {
             const selectTinh = addresses.find((tinh) => tinh.tenTinh === tenTinh);
             if (selectTinh) {
                 const selectedHuyen = selectTinh.huyenSet.find((huyen) => huyen.tenHuyen === tenHuyen);
@@ -81,7 +81,7 @@ const AddNhaTroForm = () => {
         return null;
     };
     const findTuyenDuongBySelectedXa = (tenTinh, tenHuyen, tenXa) => {
-        if (addresses.length > 0) {
+        if ((addresses?.length ?? 0) > 0) {
             const selectTinh = addresses.find((tinh) => tinh.tenTinh === tenTinh);
             if (selectTinh) {
                 const selectedHuyen = selectTinh.huyenSet.find((huyen) => huyen.tenHuyen === tenHuyen);
@@ -136,7 +136,7 @@ const AddNhaTroForm = () => {
                                 className="border border-gray-300 rounded px-3 py-2 w-full"
                             >
                                 <option value="">Chọn Tỉnh</option>
-                                {addresses.length > 0 && (
+                                {(addresses?.length ?? 0) > 0 && (
                                     <>
                                         {addresses.map((tinh, index) => (
                                             <option key={index} value={tinh.tenTinh}>
