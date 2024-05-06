@@ -16,7 +16,7 @@ function PostPreview({ post, ...passProps }) {
     console.log("postdata Preview ", postData);
     const users = useSelector((state) => state.users);
     const [expand, setExpand] = useState(false);
-    const [active, setActive] = useState(images.NhietBa);
+    const [active, setActive] = useState(images.boarding_house_sample);
     const [liked, setLiked] = useState(true);
 
     useEffect(() => {
@@ -125,7 +125,7 @@ function PostPreview({ post, ...passProps }) {
 
                     {/* Phần 3: Ảnh bài viết */}
                     <div className="mb-2 max-h-[500px] w-full flex overflow-hidden flex-wrap justify-between">
-                        <div className="h-full grid gap-4">
+                        <div className="h-full w-full grid gap-4">
                             <div>
                                 <img
                                     className="h-[300px] w-full max-w-full rounded-lg object-cover object-center md:h-[400px]"

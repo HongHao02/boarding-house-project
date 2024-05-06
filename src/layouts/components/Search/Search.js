@@ -1,11 +1,11 @@
-import { Input, Button } from '@material-tailwind/react';
 import { useEffect, useRef, useState } from 'react';
 import { useDebounced } from '~/hooks';
 import { Menu, MenuHandler, MenuList, MenuItem, Avatar, Typography } from '@material-tailwind/react';
+import { Link } from 'react-router-dom';
 
 import * as nhatroServices from '~/services/nhatroServices';
 import SearchBar from './SearchBar';
-import { Link } from 'react-router-dom';
+import images from '~/assets/images';
 
 function MenuSearchItem({ data }) {
     return (
@@ -15,14 +15,14 @@ function MenuSearchItem({ data }) {
                     <Avatar
                         variant="circular"
                         alt="natali craig"
-                        src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1061&q=80"
+                        src={images.logo}
                     />
                     <div className="flex flex-col gap-1">
                         <Typography variant="small" color="gray" className="font-semibold">
                             {`${data.tenNhaTro}`}
                         </Typography>
-                        <Typography variant='h6' className="flex items-center gap-1 text-sm font-medium text-blue-gray-500">
-                            1 hour ago
+                        <Typography variant='h6' className="flex items-center gap-1 text-[10px] font-thin text-blue-gray-500">
+                            {`${data.tenDuong}, ${data.tenHuyen}, ${data.tenHuyen}, ${data.tenTinh}`}
                         </Typography>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ function Search() {
     const [searchValue, setSearchValue] = useState('');
     const [searchResult, setSearchResult] = useState([]);
 
-    const debounced = useDebounced(searchValue, 600);
+    const debounced = useDebounced(searchValue, 100);
 
     useEffect(() => {
         if (!debounced.trim()) {

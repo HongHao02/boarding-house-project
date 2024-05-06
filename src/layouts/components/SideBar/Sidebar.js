@@ -59,7 +59,7 @@ function Sidebar({ className = '' }) {
                         />
 
                         <div className={` origin-left font-bold text-md flex-col duration-500 ${!open && 'scale-0'}`}>
-                            <h1>{users.user && users.user.user.firstName ? `${users.user.user.firstName} ${users.user.user.lastName}` : 'NO_NAME'}</h1>
+                            <h1>{users.user && users.user.user.firstName ? `${users.user.user.lastName}` : 'NO_NAME'}</h1>
                             <span className="text-[10px] text-light-green-600">
                                 {users.user ? users.user.user.username : 'Tài khoản khách'}
                             </span>

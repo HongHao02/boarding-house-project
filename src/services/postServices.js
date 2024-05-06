@@ -1,6 +1,6 @@
 import * as httpRequest from '~/utils/httpRequest';
 
-export const getVideoFollowPage = async (page = 0, size = 20) => {
+export const getVideoFollowPage = async (page = 0, size = 5) => {
     try {
         const response = await httpRequest.get('/public/baiviet', {
             params: {
