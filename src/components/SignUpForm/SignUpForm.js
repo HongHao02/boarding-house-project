@@ -116,7 +116,7 @@ const SignUpForm = () => {
                         </div>
                         <button
                             type="submit"
-                            disabled={isSubmitting}
+                            disabled={!props.isValid || isSubmitting}
                             className={`bg-blue-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed ${
                                 isSubmitting ? 'bg-blue-500 animate-pulse' : ''
                             }`}
