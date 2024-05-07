@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/boarding-house-project/static/css/main.ea092d97.css",
-    "main.js": "/boarding-house-project/static/js/main.721232cd.js",
+    "main.css": "/boarding-house-project/static/css/main.15152fb8.css",
+    "main.js": "/boarding-house-project/static/js/main.0a81a354.js",
     "static/js/787.d96c2275.chunk.js": "/boarding-house-project/static/js/787.d96c2275.chunk.js",
     "static/media/logo.png": "/boarding-house-project/static/media/logo.d53cb22b0a0944d725ed.png",
     "static/media/boarding_house.jpg": "/boarding-house-project/static/media/boarding_house.8adfb2ed55dbe0c47074.jpg",
     "static/media/mountain.jpg": "/boarding-house-project/static/media/mountain.62f600e11bd9b1f75ede.jpg",
     "index.html": "/boarding-house-project/index.html",
-    "main.ea092d97.css.map": "/boarding-house-project/static/css/main.ea092d97.css.map",
-    "main.721232cd.js.map": "/boarding-house-project/static/js/main.721232cd.js.map",
+    "main.15152fb8.css.map": "/boarding-house-project/static/css/main.15152fb8.css.map",
+    "main.0a81a354.js.map": "/boarding-house-project/static/js/main.0a81a354.js.map",
     "787.d96c2275.chunk.js.map": "/boarding-house-project/static/js/787.d96c2275.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ea092d97.css",
-    "static/js/main.721232cd.js"
+    "static/css/main.15152fb8.css",
+    "static/js/main.0a81a354.js"
   ]
 }
