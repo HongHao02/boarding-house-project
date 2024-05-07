@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import Post from '~/components/Post';
 import CardPlacehoderSkeleton from '~/components/Skeleton';
 import ScrollButton from '~/layouts/components/ScrollButton';
+import { CiCircleAlert } from 'react-icons/ci';
 
 function Home() {
     const [page, setPage] = useState(0);
@@ -33,7 +34,7 @@ function Home() {
             if (observer.current) observer.current.disconnect();
             observer.current = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) {
-                    console.log(node);
+                    console.log('node_intersectionObserver ', node);
                     setPage((prev) => prev + 1);
                 }
             });
@@ -61,29 +62,16 @@ function Home() {
         try {
             setLoading(true);
             const response = await postServices.getVideoFollowPage(page);
-            if (!response.error) {
-                if (response.data === null) {
-                    setMessage('Xin lỗi! Hiện tại không còn gì để lướt cả.');
-                    setFetching(false);
-                    console.log('LOAD POST DATA FAIL ', response.message);
-                } else {
-                    if (response.data.length > 0) {
-                        setPosts((prev) => [...prev, ...response.data]);
-                        setFetching(false);
-                        setMessage(null);
-                    } else {
-                        setFetching(false);
-                        setMessage('NO DATA TO SHOW ');
-                    }
-                }
-            } else {
+            if (response.data.length === 0) {
+                setMessage('Xin lỗi! Không còn gì để lướt nữa rồi');
                 setFetching(false);
-                //Object error {message, name, code, config, request}
-                setMessage(response.error.message);
+                console.log('NO DATA TO SHOW');
+            } else {
+                setPosts((prev) => [...prev, ...response.data]);
             }
         } catch (error) {
-            console.log('error when fetching data ', error.message);
-            setMessage(error.message);
+            console.log('error when fetching data ', error);
+            setMessage(error);
         } finally {
             setLoading(false);
         }
@@ -109,7 +97,12 @@ function Home() {
                 }
             })}
             {loading && <CardPlacehoderSkeleton />}
-            {message && <div className="text-lg text-white">{message}</div>}
+            {message && (
+                <div className="flex justify-center items-center gap-x-2">
+                    <CiCircleAlert></CiCircleAlert>
+                    {message}
+                </div>
+            )}
         </div>
     );
 }
