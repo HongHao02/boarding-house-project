@@ -29,15 +29,16 @@ function Search() {
     useEffect(() => {
         if (JSON.parse(localStorage.getItem('address'))) {
             const searchValueArray = JSON.parse(localStorage.getItem('address'));
-
-            setSearchValue((prev) => ({
-                ...prev,
-                data: searchValueArray,
-                tenTinh: searchValueArray[0].tenTinh,
-                tenXa: searchValueArray[0].tenXa,
-                tenHuyen: searchValueArray[0].tenHuyen,
-                tenDuong: searchValueArray[0].tenDuong,
-            }));
+            if ((searchValueArray?.length ?? 0) > 0) {
+                setSearchValue((prev) => ({
+                    ...prev,
+                    data: searchValueArray,
+                    tenTinh: searchValueArray[0].tenTinh,
+                    tenXa: searchValueArray[0].tenXa,
+                    tenHuyen: searchValueArray[0].tenHuyen,
+                    tenDuong: searchValueArray[0].tenDuong,
+                }));
+            }
         }
     }, []);
 
@@ -144,7 +145,13 @@ function Search() {
                             </>
                         </div>
                     ) : (
-                        <div>"Không tìm thấy"</div>
+                        <Chip
+                            size="lg"
+                            color="green"
+                            variant="outlined"
+                            value="Không có dữ liệu"
+                            className="rounded-full flex justify-center items-center m-2"
+                        />
                     )}
                 </>
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -162,7 +169,7 @@ function Search() {
                         </tr>
                     </thead>
                     <tbody>
-                        {searchValue.data.length > 0 ? (
+                        {(searchValue.data?.length ?? 0) > 0 ? (
                             <>
                                 {searchValue.data.map(({ tenNhaTro, username }, index) => (
                                     <tr
@@ -172,25 +179,24 @@ function Search() {
                                         <td className="px-6 py-4 font-normal text-gray-900 whitespace-nowrap dark:text-white">
                                             {index + 1}
                                         </td>
-                                        <th
-                                            scope="row"
+                                        <td
                                             className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                                         >
                                             {tenNhaTro}
-                                        </th>
+                                        </td>
 
-                                        <Link to={`/:${username}`}>
-                                            <td className="px-12 py-4">
+                                        <td className="px-12 py-4">
+                                            <Link to={`/:${username}`}>
                                                 <MdOutlineHouse className="text-3xl" />
-                                            </td>
-                                        </Link>
+                                            </Link>
+                                        </td>
                                     </tr>
                                 ))}
                             </>
                         ) : (
-                            <div>
-                                <p>Không tìm thấy</p>
-                            </div>
+                            <tr>
+                                <td >Không tìm thấy</td>
+                            </tr>
                         )}
                     </tbody>
                 </table>
