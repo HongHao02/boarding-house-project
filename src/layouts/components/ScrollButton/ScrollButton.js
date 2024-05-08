@@ -25,7 +25,7 @@ function ScrollButton() {
         <>
             {visible && (
                 <div
-                    className="fixed flex justify-center items-center w-10 top-[600px] right-[200px] h-10 font-bold z-10 cursor-pointer bg-green-100 border-2 rounded-full hover:bg-red-500 animate-bounce "
+                    className="fixed flex justify-center items-center w-10 top-[650px] right-[50px] h-10 font-bold z-10 cursor-pointer bg-green-100 border-2 rounded-full hover:bg-red-500 animate-bounce "
                     onClick={scrollToTop}
                 >
                     <TbNavigationTop color="red w-10 h-10"></TbNavigationTop>

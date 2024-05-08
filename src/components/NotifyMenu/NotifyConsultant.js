@@ -62,9 +62,9 @@ function NotifyConsultant({ NotifyIcon }) {
                     {Object.keys(consultant).length > 0 ? (
                         <>
                             {consultant.tuVanDTOList.map(({ user, chiTietTuVanSet, viewed }, index) => (
-                                <>
+                                <div key={index}>
                                     {!viewed && (
-                                        <MenuItem key={index} className="flex items-center gap-4 py-2 pl-2 pr-8">
+                                        <MenuItem className="flex items-center gap-4 py-2 pl-2 pr-8">
                                             <Avatar
                                                 variant="circular"
                                                 alt="tania andrew"
@@ -83,7 +83,7 @@ function NotifyConsultant({ NotifyIcon }) {
                                             </div>
                                         </MenuItem>
                                     )}
-                                </>
+                                </div>
                             ))}
                         </>
                     ) : (

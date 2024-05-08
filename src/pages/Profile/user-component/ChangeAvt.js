@@ -4,13 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { loginUserSuccess } from '~/features/user/userSlice';
 import * as userServices from '~/services/userServices';
+import images from '~/assets/images';
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB expressed in bytes
 function ChangeAvt() {
     const [file, setFile] = useState(null);
 
     const users = useSelector((state) => state.users);
     const dispatch = useDispatch();
-    const [url, setUrl] = useState(users.user.user.avt);
+    const [url, setUrl] = useState(users.user.user?.avt ?? images.noAVTMale);
 
     const fetchUserInfo = async () => {
         try {
@@ -54,16 +55,17 @@ function ChangeAvt() {
     };
 
     useEffect(() => {
+        let url_object;
         if (file) {
             if (file.size === 0 || file.size > MAX_SIZE) {
-                setUrl(users.user.user.avt);
+                setUrl(users.user.user?.avt ?? images.noAVTMale);
+                console.log('url_image ', url);
             } else {
-                const url = URL.createObjectURL(file);
-                setUrl(url);
+                url_object = URL.createObjectURL(file);
+                setUrl(url_object);
             }
         }
-
-        return () => URL.revokeObjectURL(url);
+        return () => URL.revokeObjectURL(url_object);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
 
@@ -74,7 +76,7 @@ function ChangeAvt() {
     return (
         <div className="flex flex-col gap-4">
             <div className="w-36 h-36 rounded-full border-green-500">
-                <img src={url || users.user.user.avt} alt="avt" className="w-full h-full object-cover rounded-full" />
+                <img src={url} alt="avt" className="w-full h-full object-cover rounded-full" />
             </div>
             <input
                 // value={postData.files}

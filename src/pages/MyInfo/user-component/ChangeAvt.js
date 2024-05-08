@@ -1,6 +1,7 @@
 import { Button } from '@material-tailwind/react';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import images from '~/assets/images';
 
 import { loginUserSuccess } from '~/features/user/userSlice';
 import * as userServices from '~/services/userServices';
@@ -10,7 +11,7 @@ function ChangeAvt() {
 
     const users = useSelector((state) => state.users);
     const dispatch = useDispatch();
-    const [url, setUrl] = useState(users.user.user.avt);
+    const [url, setUrl] = useState(users.user.user?.avt ?? images.noAVTMale);
     const [message, setMessage] = useState(null);
 
     const fetchUserInfo = async () => {
@@ -55,11 +56,11 @@ function ChangeAvt() {
 
     useEffect(() => {
         const validTypes = ['image/jpeg', 'image/png', 'image/jpg']; // Các loại file ảnh bạn muốn chấp nhận
-
+        let url_object;
         if (file) {
             console.log('FILE CHANGE ', file.type);
             if (file.size === 0 || file.size > MAX_SIZE) {
-                setUrl(users.user.user.avt);
+                setUrl(users.user.user?.avt ?? images.noAVTMale); //Use optional chaining and nullish coalescing for secure access
             } else {
                 if (!validTypes.includes(file.type)) {
                     setMessage(
@@ -67,19 +68,15 @@ function ChangeAvt() {
                     );
                 } else {
                     setMessage(null);
-                    const url = URL.createObjectURL(file);
-                    setUrl(url);
+                    url_object = URL.createObjectURL(file);
+                    setUrl(url_object);
                 }
             }
         }
 
-        return () => URL.revokeObjectURL(url);
+        return () => URL.revokeObjectURL(url_object);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [file]);
-
-    // useEffect(() => {
-    //     setUrl(users.user.user.avt);
-    // }, [users]);
 
     return (
         <div className="flex flex-col gap-4">

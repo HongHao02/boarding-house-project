@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { FaHeart } from 'react-icons/fa';
+import { FaHeart, FaPenAlt } from 'react-icons/fa';
 import { FaComment } from 'react-icons/fa';
 import { MdOutlineMoreHoriz } from 'react-icons/md';
 import { FaHouse } from 'react-icons/fa6';
@@ -25,7 +25,18 @@ import useCheckChuTroRole from '~/hooks/useCheckChuTroRole';
 import DialogDefault from '~/components/Dialog/DialogDefault';
 import Consultant from '~/components/Post/components/Consultant';
 
-const CommentElement = ({ idBL, username, avt, lastName, firstName, noiDung, thoiGianBL, onLoading }) => {
+const CommentElement = ({
+    idBL,
+    username,
+    avt,
+    lastName,
+    firstName,
+    noiDung,
+    thoiGianBL,
+    onLoading,
+    post_ouwner_id,
+    user_id,
+}) => {
     const { user } = useSelector((state) => state.users);
     const [isHovered, setIsHovered] = useState(false);
 
@@ -38,6 +49,12 @@ const CommentElement = ({ idBL, username, avt, lastName, firstName, noiDung, tho
             <>
                 <Avatar src={avt || images.noAVTMale} className="w-8 h-8" withBorder={true}></Avatar>
                 <div className=" rounded-lg bg-blue-gray-50 mb-2 p-2">
+                    {user_id === post_ouwner_id && (
+                        <h5 className="flex gap-x-1 items-center">
+                            <FaPenAlt color="gray" className="w-3 h-3" />
+                            <span className="text-[10px] text-gray-500">Chủ trọ</span>
+                        </h5>
+                    )}
                     <h4 className="font-bold">{`${
                         firstName === null || lastName === null ? 'NO_NAME' : firstName.concat(' ').concat(lastName)
                     }`}</h4>
@@ -91,6 +108,7 @@ function Comment() {
         baiViet: null,
         comments: [],
     });
+    console.log('BaiViet ', post.comments);
 
     const [loading, setLoading] = useState(false);
     const [expand, setExpand] = useState(false);
@@ -361,6 +379,7 @@ function Comment() {
                                         post.comments.map(({ user, idBL, noiDung, thoiGianBL }, index) => (
                                             <CommentElement
                                                 key={index}
+                                                user_id={user.id}
                                                 avt={user.avt}
                                                 firstName={user.firstName}
                                                 lastName={user.lastName}
@@ -368,6 +387,7 @@ function Comment() {
                                                 noiDung={noiDung}
                                                 username={user.username}
                                                 idBL={idBL}
+                                                post_ouwner_id={post.baiViet.user.id}
                                                 onLoading={handleLoading}
                                             ></CommentElement>
                                         ))

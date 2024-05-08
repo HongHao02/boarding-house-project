@@ -231,7 +231,7 @@ const AddFormAddress = ({ onResult = () => {} }) => {
                             </button>
                             <button
                                 type="reset"
-                                disabled={isSubmitting}
+                                disabled={!props.isValid || isSubmitting}
                                 className={`ml-4 bg-red-500 text-white px-4 py-2 rounded disabled:bg-gray-400 disabled:cursor-not-allowed`}
                                 onClick={() => setSubmitError(null)}
                             >
